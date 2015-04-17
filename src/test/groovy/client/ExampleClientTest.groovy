@@ -2,7 +2,7 @@ package client
 
 import client.api.MyApi
 import client.api.OtherApi
-import contracto.Cotracto
+import contracto.Contracto
 import spock.lang.Specification
 
 class ExampleClientTest extends Specification{
@@ -15,6 +15,6 @@ class ExampleClientTest extends Specification{
         ]
 
         expect:
-        Cotracto.checkContracts(apis, urls)
+        Contracto.checkContracts(apis, urls)
     }
 }

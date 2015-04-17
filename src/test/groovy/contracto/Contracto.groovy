@@ -6,7 +6,7 @@ import groovy.transform.CompileStatic
 import java.lang.reflect.Method
 
 @CompileStatic
-class Cotracto {
+class Contracto {
     static boolean checkContracts(List<Class> apis, List<String> urls) {
         List<Contract> contracts = new ContractoService().call(urls)
         List<Method> methods = methods(apis)
