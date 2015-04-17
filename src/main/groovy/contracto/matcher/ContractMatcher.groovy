@@ -10,19 +10,9 @@ class ContractMatcher {
     private List<ContractoMethod> methods
     private List<Contract> contracts
 
-    ContractMatcher(List<Class> apis, List<Contract> contracts) {
-        this.methods = findMethods(apis)
+    ContractMatcher(List<ContractoMethod> methods, List<Contract> contracts){
+        this.methods = methods
         this.contracts = contracts
-    }
-
-    private static List<ContractoMethod> findMethods(List<Class> apis) {
-        List<ContractoMethod> methods = []
-        for(Class api: apis){
-            for (int i = 0; i < api.methods.length; i++) {
-                methods.add(new ContractoMethod(api.methods[i], api))
-            }
-        }
-        return methods
     }
 
     List<ContractMethodMatch> findMatching() {

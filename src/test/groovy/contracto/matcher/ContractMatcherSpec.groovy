@@ -5,13 +5,14 @@ import client.api.OtherApi
 import contracto.model.ContractStub
 import contracto.model.ContractMethodMatch
 import contracto.model.contract.Contract
+import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
 class ContractMatcherSpec extends Specification {
 
     def "Should find matches"() {
         given:
-        def methods = [MyApi, OtherApi]
+        def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
         ContractMatcher matcher = new ContractMatcher(methods, contracts)
@@ -30,7 +31,7 @@ class ContractMatcherSpec extends Specification {
 
     def "Should find one match based on contract"() {
         given:
-        def methods = [MyApi, OtherApi]
+        def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract()]
         and:
         ContractMatcher matcher = new ContractMatcher(methods, contracts)
@@ -49,7 +50,7 @@ class ContractMatcherSpec extends Specification {
 
     def "Should find one match besed on methods"() {
         given:
-        def methods = [MyApi]
+        def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
         ContractMatcher matcher = new ContractMatcher(methods, contracts)
@@ -68,7 +69,7 @@ class ContractMatcherSpec extends Specification {
 
     def "Should not find unmatched contracts"() {
         given:
-        def methods = [MyApi, OtherApi]
+        def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
         ContractMatcher matcher = new ContractMatcher(methods, contracts)
@@ -80,7 +81,7 @@ class ContractMatcherSpec extends Specification {
 
     def "Should find unmatched contracts"() {
         given:
-        def methods = [MyApi]
+        def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
         ContractMatcher matcher = new ContractMatcher(methods, contracts)
@@ -88,5 +89,15 @@ class ContractMatcherSpec extends Specification {
         List<Contract> unmatched = matcher.findContractsWithoutMatch()
         then:
         unmatched == [ContractStub.otherContract()]
+    }
+
+    public static List<ContractoMethod> findMethods(List<Class> apis) {
+        List<ContractoMethod> methods = []
+        for(Class api: apis){
+            for (int i = 0; i < api.methods.length; i++) {
+                methods.add(new ContractoMethod(api.methods[i], api))
+            }
+        }
+        return methods
     }
 }

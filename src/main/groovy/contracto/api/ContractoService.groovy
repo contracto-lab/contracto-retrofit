@@ -9,7 +9,7 @@ import retrofit.converter.GsonConverter
 
 class ContractoService {
 
-    List<Contract> call(Collection<String> urls) {
+    List<Contract> downloadContracts(Collection<String> urls) {
         return urls.collect { String url ->
             def lastSlash = url.lastIndexOf('/')
             def endpoint = url.substring(0, lastSlash)

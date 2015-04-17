@@ -15,6 +15,6 @@ class ExampleClientTest extends Specification{
         ]
 
         expect:
-        Contracto.checkContracts(apis, urls)
+        new Contracto().checkContracts(apis, urls)
     }
 }
