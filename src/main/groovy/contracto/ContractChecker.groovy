@@ -1,10 +1,8 @@
 package contracto
 
-import java.lang.reflect.Method
-
 class ContractChecker {
 
-    static boolean checkBody(Method method, Item body) {
-        true
+    static boolean checkObjectMatchBody(Class aClass, Item body) {
+        return true
     }
 }

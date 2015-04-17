@@ -15,18 +15,22 @@ class ContractStub {
                                 request: new MetaRequest(
                                 ),
                                 response: new MetaResponse(
-                                        body: new Item(
-                                                type: object,
-                                                embedded: [
-                                                        new Item(
-                                                                name: 'id',
-                                                                type: string,
-                                                        ),
-                                                ],
-                                        ),
+                                        body: body(),
                                 ),
                         ),
                 ),
+        )
+    }
+
+    static Item body() {
+        new Item(
+                type: object,
+                embedded: [
+                        new Item(
+                                name: 'id',
+                                type: string,
+                        ),
+                ],
         )
     }
 }
