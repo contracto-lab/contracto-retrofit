@@ -15,8 +15,14 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.findMatching()
         then:
-        matches.contains(new ContractMethodMatch(method: MyApi.methods.first(), contract: ContractStub.contract()))
-        matches.contains(new ContractMethodMatch(method: OtherApi.methods.first(), contract: ContractStub.otherContract()))
+        matches.any{
+            return it.method.method == MyApi.methods.first() &&
+                    it.contract == ContractStub.contract()
+        }
+        matches.any{
+            return it.method.method == OtherApi.methods.first() &&
+                    it.contract == ContractStub.otherContract()
+        }
     }
 
     def "Should find one match based on contract"() {
@@ -28,8 +34,14 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.findMatching()
         then:
-        matches.contains(new ContractMethodMatch(method: MyApi.methods.first(), contract: ContractStub.contract()))
-        !matches.contains(new ContractMethodMatch(method: OtherApi.methods.first(), contract: ContractStub.otherContract()))
+        matches.any{
+            return it.method.method == MyApi.methods.first() &&
+                    it.contract == ContractStub.contract()
+        }
+        !matches.any{
+            return it.method.method == OtherApi.methods.first() &&
+                    it.contract == ContractStub.otherContract()
+        }
     }
 
     def "Should find one match besed on methods"() {
@@ -41,8 +53,14 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.findMatching()
         then:
-        matches.contains(new ContractMethodMatch(method: MyApi.methods.first(), contract: ContractStub.contract()))
-        !matches.contains(new ContractMethodMatch(method: OtherApi.methods.first(), contract: ContractStub.otherContract()))
+        matches.any{
+            return it.method.method == MyApi.methods.first() &&
+                    it.contract == ContractStub.contract()
+        }
+        !matches.any {
+            return it.method.method == OtherApi.methods.first() &&
+                    it.contract == ContractStub.otherContract()
+        }
     }
 
     def "Should not find unmatched contracts"() {

@@ -29,7 +29,7 @@ class ContractMatcher {
         methods.each { method ->
             contracts.each { contract ->
                 if(contract.isMatching(method.method)){
-                    matches.add(new ContractMethodMatch(method: method.method, contract: contract))
+                    matches.add(new ContractMethodMatch(method: method, contract: contract))
                 }
             }
         }
