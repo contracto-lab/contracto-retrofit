@@ -9,17 +9,18 @@ import retrofit.converter.GsonConverter
 
 class ContractoService {
 
-    Contract call() {
-        def endpoint = "https://raw.githubusercontent.com/kv109/contracto_sample-contract/master/my_data.con.json"
-        def lastSlash = endpoint.lastIndexOf('/')
-        def root = endpoint.substring(0, lastSlash)
-        def contract = endpoint.substring(lastSlash + 1)
-        def adapter = new RestAdapter.Builder()
-                .setEndpoint(root)
-                .setConverter(new GsonConverter(createGson()))
-                .build()
-        def api = adapter.create(ContractoApi)
-        return api.call(contract)
+    List<Contract> call(Collection<String> urls) {
+        return urls.collect { String url ->
+            def lastSlash = url.lastIndexOf('/')
+            def endpoint = url.substring(0, lastSlash)
+            def contract = url.substring(lastSlash + 1)
+            def adapter = new RestAdapter.Builder()
+                    .setEndpoint(endpoint)
+                    .setConverter(new GsonConverter(createGson()))
+                    .build()
+            def api = adapter.create(ContractoApi)
+            return api.call(contract)
+        }
     }
 
     private static Gson createGson() {
