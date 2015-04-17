@@ -15,9 +15,9 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
-        ContractMatcher matcher = new ContractMatcher(methods, contracts)
+        ContractMatcher matcher = new ContractMatcher()
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching()
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
         matches.any {
             return it.method.method == MyApi.methods.first() &&
@@ -34,9 +34,9 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract()]
         and:
-        ContractMatcher matcher = new ContractMatcher(methods, contracts)
+        ContractMatcher matcher = new ContractMatcher()
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching()
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
         matches.any {
             return it.method.method == MyApi.methods.first() &&
@@ -53,9 +53,9 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
-        ContractMatcher matcher = new ContractMatcher(methods, contracts)
+        ContractMatcher matcher = new ContractMatcher()
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching()
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
         matches.any {
             return it.method.method == MyApi.methods.first() &&
@@ -72,9 +72,9 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
-        ContractMatcher matcher = new ContractMatcher(methods, contracts)
+        ContractMatcher matcher = new ContractMatcher()
         when:
-        List<Contract> unmatched = matcher.findContractsWithoutMatch()
+        List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
         then:
         unmatched.isEmpty()
     }
@@ -84,9 +84,9 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         and:
-        ContractMatcher matcher = new ContractMatcher(methods, contracts)
+        ContractMatcher matcher = new ContractMatcher()
         when:
-        List<Contract> unmatched = matcher.findContractsWithoutMatch()
+        List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
         then:
         unmatched == [ContractStub.otherContract()]
     }
