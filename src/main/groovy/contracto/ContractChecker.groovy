@@ -6,23 +6,23 @@ import groovy.transform.CompileStatic
 class ContractChecker {
 
     static boolean checkMethodReturnTypeMatchItem(ContractoMethod contractoMethod, Item item) {
-        return checkClassMatchItem(contractoMethod.method.returnType, item)
+        return checkClassMatchItem(contractoMethod.returnType, item)
     }
 
-    static boolean checkClassMatchItem(Class aClass, Item item) {
+    static boolean checkClassMatchItem(ContractoClassType classType, Item item) {
         if (item.type.isSimpleType) {
-            return aClass in item.type.possibleClasses
+            return classType.type in item.type.possibleClasses
         } else if (item.type == Type.object) {
             return item.embedded.every {
-                checkItemExistsInClass(aClass, it)
+                checkItemExistsInClass(classType, it)
             }
         } else {
             throw new UnsupportedOperationException('It is hard to tell when it is array...')
         }
     }
 
-    static boolean checkItemExistsInClass(Class aClass, Item item) {
-        def find = aClass.declaredFields.find { it.name == item.name }
-        return find ? checkClassMatchItem(find.type, item) : false
+    static boolean checkItemExistsInClass(ContractoClassType classType, Item item) {
+        def find = classType.type.declaredFields.find { it.name == item.name }
+        return find ? checkClassMatchItem(new ContractoClassType(type: find.type), item) : false
     }
 }

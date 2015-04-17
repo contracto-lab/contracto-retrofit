@@ -7,10 +7,14 @@ import java.lang.reflect.Method
 @CompileStatic
 class ContractoMethod {
     final Method method
-    final Class fromClass
+    final Class inClass
 
-    ContractoMethod(Method method, Class fromClass) {
+    ContractoMethod(Method method, Class inClass) {
         this.method = method
-        this.fromClass = fromClass
+        this.inClass = inClass
+    }
+
+    ContractoClassType getReturnType() {
+        return ContractoClassType.from(method, inClass)
     }
 }
