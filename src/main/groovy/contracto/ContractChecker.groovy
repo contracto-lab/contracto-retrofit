@@ -17,7 +17,7 @@ class ContractChecker {
                 checkItemExistsInClass(classType, it)
             }
         } else {
-            throw new UnsupportedOperationException('It is hard to tell when it is array...')
+            return classType.type == List && checkClassMatchItem(new ContractoClassType(type: classType.genericType),item.embedded.first())
         }
     }
 

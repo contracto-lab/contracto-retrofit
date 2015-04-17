@@ -1,6 +1,5 @@
 package contracto
 
-import groovy.transform.CompileStatic
 import spock.lang.Specification
 
 import java.lang.reflect.Field
