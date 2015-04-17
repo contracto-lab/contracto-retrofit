@@ -38,7 +38,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
         expect:
         ContractChecker.checkClassMatchItem(aClass, new Item(type: type)) == result
         where:
-        type   | aClass  | result
+        type | aClass  | result
         bool | Integer | false
         bool | int     | false
         bool | Number  | false
