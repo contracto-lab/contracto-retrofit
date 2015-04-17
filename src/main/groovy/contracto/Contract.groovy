@@ -31,6 +31,6 @@ class Contract {
     }
 
     void displayWarning(){
-
+        System.err.println("Warning no matching for: \n$this")
     }
 }

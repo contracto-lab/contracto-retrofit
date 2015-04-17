@@ -10,24 +10,24 @@ class ContractCheckerSpec extends Specification {
 
     def "Should return true when object match body"() {
         expect:
-        checkClassMatchItem(MyData, newObjectItem('id', string))
+        checkClassMatchItem(new ContractoClassType(type: MyData), newObjectItem('id', string))
     }
 
     def "Should return false when class field has wrong name"() {
         expect:
-        !checkClassMatchItem(MyData, newObjectItem('wrongName', string))
+        !checkClassMatchItem(new ContractoClassType(type: MyData), newObjectItem('wrongName', string))
     }
 
     def "Should return false when class field has wrong type"() {
         given:
         def wrongType = number
         expect:
-        !checkClassMatchItem(MyData, newObjectItem('id', wrongType))
+        !checkClassMatchItem(new ContractoClassType(type: MyData), newObjectItem('id', wrongType))
     }
 
     def "Should return false when expected simple type"() {
         expect:
-        !checkClassMatchItem(MyData, new Item(type: string))
+        !checkClassMatchItem(new ContractoClassType(type: MyData), new Item(type: string))
     }
 
     private static Item newObjectItem(String embeddedItemName, Type embeddedItemType) {

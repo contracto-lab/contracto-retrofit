@@ -8,7 +8,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
 
     def "Should recognise correct simple classes as number"() {
         expect:
-        ContractChecker.checkClassMatchItem(aClass, new Item(type: type)) == result
+        ContractChecker.checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
         where:
         type   | aClass  | result
         number | Integer | true
@@ -22,7 +22,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
 
     def "Should recognise correct simple classes as string"() {
         expect:
-        ContractChecker.checkClassMatchItem(aClass, new Item(type: type)) == result
+        ContractChecker.checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
         where:
         type   | aClass  | result
         string | Integer | false
@@ -36,7 +36,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
 
     def "Should recognise correct simple classes as boolean"() {
         expect:
-        ContractChecker.checkClassMatchItem(aClass, new Item(type: type)) == result
+        ContractChecker.checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
         where:
         type | aClass  | result
         bool | Integer | false
