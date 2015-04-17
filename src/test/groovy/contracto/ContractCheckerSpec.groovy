@@ -3,18 +3,34 @@ package contracto
 import client.data.MyData
 import spock.lang.Specification
 
+import static contracto.ContractChecker.checkClassMatchItem
+import static contracto.Type.*
+
 class ContractCheckerSpec extends Specification {
 
     def "Should return true when object match body"() {
         expect:
-        ContractChecker.checkObjectMatchBody(MyData, ContractStub.body())
+        checkClassMatchItem(MyData, newItem(object, 'id', string))
     }
 
     def "Should return false when object doesn't match body"() {
-        given:
-        def body = ContractStub.body()
-        body.embedded.first().name = 'new_name_just_to_fail_checking'
         expect:
-        !ContractChecker.checkObjectMatchBody(MyData, body)
+        !checkClassMatchItem(MyData, newItem(type, embeddedItemName, embeddedItemType))
+        where:
+        type   | embeddedItemName | embeddedItemType
+        object | 'name'           | string
+        object | 'id'             | number
+    }
+
+    private static Item newItem(type, String embeddedItemName, embeddedItemType) {
+        return new Item(
+                type: type,
+                embedded: [
+                        new Item(
+                                name: embeddedItemName,
+                                type: embeddedItemType,
+                        ),
+                ],
+        )
     }
 }

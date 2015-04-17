@@ -2,26 +2,32 @@ package contracto
 
 enum Type {
 
-    object,
-    string{
+    object(false),
+    string(true){
         @Override
         List<Class> getPossibleClasses() {
             return [String]
         }
     },
-    number{
+    number(true){
         @Override
         List<Class> getPossibleClasses() {
             return [Integer, int, Number, double]
         }
     },
-    bool{
+    bool(true){
         @Override
         List<Class> getPossibleClasses() {
             return [Boolean, boolean]
         }
     },
-    array
+    array(false)
+
+    final boolean isSimpleType
+
+    Type(boolean isSimpleType) {
+        this.isSimpleType = isSimpleType
+    }
 
     List<Class> getPossibleClasses() {
         return []
