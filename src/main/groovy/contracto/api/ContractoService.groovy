@@ -14,13 +14,17 @@ class ContractoService {
             def lastSlash = url.lastIndexOf('/')
             def endpoint = url.substring(0, lastSlash)
             def contract = url.substring(lastSlash + 1)
-            def adapter = new RestAdapter.Builder()
-                    .setEndpoint(endpoint)
-                    .setConverter(new GsonConverter(createGson()))
-                    .build()
+            def adapter = createRestAdapter(endpoint)
             def api = adapter.create(ContractoApi)
             return api.call(contract)
         }
+    }
+
+    private RestAdapter createRestAdapter(String endpoint) {
+        new RestAdapter.Builder()
+                .setEndpoint(endpoint)
+                .setConverter(new GsonConverter(createGson()))
+                .build()
     }
 
     private static Gson createGson() {
