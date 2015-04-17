@@ -1,12 +1,6 @@
 package contracto.model
 
-import contracto.model.contract.Contract
-import contracto.model.contract.HttpMethod
-import contracto.model.contract.Item
-import contracto.model.contract.Meta
-import contracto.model.contract.MetaRequest
-import contracto.model.contract.MetaResponse
-import contracto.model.contract.Request
+import contracto.model.contract.*
 import groovy.transform.CompileStatic
 
 import static contracto.model.contract.Type.object

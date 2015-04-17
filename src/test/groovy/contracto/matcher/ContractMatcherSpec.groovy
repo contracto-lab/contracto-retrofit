@@ -2,8 +2,8 @@ package contracto.matcher
 
 import client.api.MyApi
 import client.api.OtherApi
-import contracto.model.ContractStub
 import contracto.model.ContractMethodMatch
+import contracto.model.ContractStub
 import contracto.model.contract.Contract
 import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
@@ -19,11 +19,11 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.findMatching()
         then:
-        matches.any{
+        matches.any {
             return it.method.method == MyApi.methods.first() &&
                     it.contract == ContractStub.contract()
         }
-        matches.any{
+        matches.any {
             return it.method.method == OtherApi.methods.first() &&
                     it.contract == ContractStub.otherContract()
         }
@@ -38,11 +38,11 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.findMatching()
         then:
-        matches.any{
+        matches.any {
             return it.method.method == MyApi.methods.first() &&
                     it.contract == ContractStub.contract()
         }
-        !matches.any{
+        !matches.any {
             return it.method.method == OtherApi.methods.first() &&
                     it.contract == ContractStub.otherContract()
         }
@@ -57,7 +57,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.findMatching()
         then:
-        matches.any{
+        matches.any {
             return it.method.method == MyApi.methods.first() &&
                     it.contract == ContractStub.contract()
         }
@@ -93,7 +93,7 @@ class ContractMatcherSpec extends Specification {
 
     public static List<ContractoMethod> findMethods(List<Class> apis) {
         List<ContractoMethod> methods = []
-        for(Class api: apis){
+        for (Class api : apis) {
             for (int i = 0; i < api.methods.length; i++) {
                 methods.add(new ContractoMethod(api.methods[i], api))
             }

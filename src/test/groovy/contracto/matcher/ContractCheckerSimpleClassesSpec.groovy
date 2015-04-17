@@ -1,8 +1,7 @@
 package contracto.matcher
 
-import contracto.matcher.ContractChecker
-import contracto.model.reflect.ContractoClassType
 import contracto.model.contract.Item
+import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
 
 import static contracto.model.contract.Type.*

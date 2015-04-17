@@ -1,8 +1,8 @@
 package contracto.model
 
 import contracto.matcher.ContractChecker
-import contracto.model.reflect.ContractoMethod
 import contracto.model.contract.Contract
+import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 
@@ -13,6 +13,6 @@ class ContractMethodMatch {
     Contract contract
 
     boolean match() {
-        return ContractChecker.checkMethodReturnTypeMatchItem(method,contract.request.meta.response.body)
+        return ContractChecker.checkMethodReturnTypeMatchItem(method, contract.request.meta.response.body)
     }
 }

@@ -1,9 +1,9 @@
 package contracto.matcher
 
-import contracto.model.reflect.ContractoClassType
-import contracto.model.reflect.ContractoMethod
 import contracto.model.contract.Item
 import contracto.model.contract.Type
+import contracto.model.reflect.ContractoClassType
+import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
 @CompileStatic
@@ -21,7 +21,7 @@ class ContractChecker {
                 checkItemExistsInClass(classType, it)
             }
         } else {
-            return classType.type == List && checkClassMatchItem(new ContractoClassType(type: classType.genericType),item.embedded.first())
+            return classType.type == List && checkClassMatchItem(new ContractoClassType(type: classType.genericType), item.embedded.first())
         }
     }
 

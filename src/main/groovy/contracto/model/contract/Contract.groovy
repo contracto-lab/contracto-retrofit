@@ -30,7 +30,7 @@ class Contract {
         return get.value()
     }
 
-    void displayWarning(){
+    void displayWarning() {
         System.err.println("Warning no matching for: \n$this")
     }
 }
