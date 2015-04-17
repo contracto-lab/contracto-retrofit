@@ -12,6 +12,8 @@ class ContractStub {
         return new Contract(
                 request: new Request(
                         meta: new Meta(
+                                request: new MetaRequest(
+                                ),
                                 response: new MetaResponse(
                                         body: new Item(
                                                 type: object,
