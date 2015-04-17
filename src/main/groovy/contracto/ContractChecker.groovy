@@ -8,10 +8,12 @@ class ContractChecker {
     static boolean checkClassMatchItem(Class aClass, Item item) {
         if(item.type.isSimpleType){
             return aClass in item.type.possibleClasses
-        }else{
+        }else if(item.type == Type.object) {
             return item.embedded.every{
                 checkItemExistsInClass(aClass, it)
             }
+        }else{
+            throw new UnsupportedOperationException('It is hard to tell when it is array...')
         }
     }
 
