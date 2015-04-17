@@ -13,10 +13,6 @@
             {
               "name": "id",
               "type": "string"
-            },
-            {
-              "name": "age",
-              "type": "number"
             }
           ]
         }
