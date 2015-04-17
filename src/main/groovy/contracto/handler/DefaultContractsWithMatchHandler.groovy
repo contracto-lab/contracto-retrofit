@@ -1,4 +1,4 @@
-package contracto
+package contracto.handler
 
 import contracto.model.ContractMethodMatch
 import groovy.transform.CompileStatic
