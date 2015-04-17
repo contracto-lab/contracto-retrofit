@@ -7,7 +7,7 @@ class ContractoServiceSpec extends Specification {
 
     def "should return same contract"() {
         given:
-        Contract contract = new ContractoService().call("my_data.con.json")
+        Contract contract = new ContractoService().call()
         expect:
         contract == ContractStub.contract()
     }
