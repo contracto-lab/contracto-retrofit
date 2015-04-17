@@ -3,7 +3,7 @@ package contracto.api
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import contracto.Contract
+import contracto.model.contract.Contract
 import retrofit.RestAdapter
 import retrofit.converter.GsonConverter
 

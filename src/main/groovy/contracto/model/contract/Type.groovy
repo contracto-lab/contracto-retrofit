@@ -1,4 +1,4 @@
-package contracto
+package contracto.model.contract
 
 enum Type {
 

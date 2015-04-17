@@ -1,8 +1,9 @@
-package contracto
+package contracto.matcher
 
+import contracto.model.ContractMethodMatch
+import contracto.model.reflect.ContractoMethod
+import contracto.model.contract.Contract
 import groovy.transform.CompileStatic
-
-import java.lang.reflect.Method
 
 @CompileStatic
 class ContractMatcher {

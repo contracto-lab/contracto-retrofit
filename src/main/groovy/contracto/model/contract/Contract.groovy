@@ -1,4 +1,4 @@
-package contracto
+package contracto.model.contract
 
 import contracto.discovery.RetrofitMethodsFinder
 import groovy.transform.Canonical

@@ -1,7 +1,10 @@
-package contracto
+package contracto.matcher
 
 import client.api.MyApi
 import client.api.OtherApi
+import contracto.model.ContractStub
+import contracto.model.ContractMethodMatch
+import contracto.model.contract.Contract
 import spock.lang.Specification
 
 class ContractMatcherSpec extends Specification {

@@ -1,12 +1,13 @@
-package contracto
+package contracto.model
 
+import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
-import static contracto.ContractoClassType.fromField
-import static contracto.ContractoClassType.fromMethod
+import static ContractoClassType.fromField
+import static ContractoClassType.fromMethod
 
 class ContractoClassTypeSpec extends Specification {
 

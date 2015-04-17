@@ -1,6 +1,8 @@
-package contracto
+package contracto.api
 
 import contracto.api.ContractoService
+import contracto.model.ContractStub
+import contracto.model.contract.Contract
 import spock.lang.Specification
 
 class ContractoServiceSpec extends Specification {

@@ -1,5 +1,9 @@
-package contracto
+package contracto.matcher
 
+import contracto.model.reflect.ContractoClassType
+import contracto.model.reflect.ContractoMethod
+import contracto.model.contract.Item
+import contracto.model.contract.Type
 import groovy.transform.CompileStatic
 
 @CompileStatic

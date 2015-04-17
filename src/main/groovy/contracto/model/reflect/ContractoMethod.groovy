@@ -1,4 +1,4 @@
-package contracto
+package contracto.model.reflect
 
 import groovy.transform.CompileStatic
 

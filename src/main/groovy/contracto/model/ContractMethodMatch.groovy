@@ -1,5 +1,8 @@
-package contracto
+package contracto.model
 
+import contracto.matcher.ContractChecker
+import contracto.model.reflect.ContractoMethod
+import contracto.model.contract.Contract
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 

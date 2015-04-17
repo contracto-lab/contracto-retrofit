@@ -1,4 +1,4 @@
-package contracto
+package contracto.model.contract
 
 import retrofit.http.DELETE
 import retrofit.http.GET

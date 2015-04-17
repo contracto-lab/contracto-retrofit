@@ -1,11 +1,13 @@
-package contracto
+package contracto.matcher
 
+import contracto.model.reflect.ContractoClassType
+import contracto.model.contract.Item
 import spock.lang.Specification
 
-import static contracto.ContractChecker.checkClassMatchItem
-import static contracto.Type.array
-import static contracto.Type.number
-import static contracto.Type.string
+import static contracto.matcher.ContractChecker.checkClassMatchItem
+import static contracto.model.contract.Type.array
+import static contracto.model.contract.Type.number
+import static contracto.model.contract.Type.string
 
 class ContractCheckerListSpec extends Specification {
 

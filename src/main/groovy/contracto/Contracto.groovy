@@ -1,6 +1,8 @@
 package contracto
 
 import contracto.api.ContractoService
+import contracto.matcher.ContractMatcher
+import contracto.model.contract.Contract
 import groovy.transform.CompileStatic
 
 @CompileStatic
