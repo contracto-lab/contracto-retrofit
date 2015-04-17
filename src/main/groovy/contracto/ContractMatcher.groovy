@@ -6,20 +6,30 @@ import java.lang.reflect.Method
 
 @CompileStatic
 class ContractMatcher {
-    private List<Method> methods
+    private List<ContractoMethod> methods
     private List<Contract> contracts
 
-    ContractMatcher(List<Method> methods, List<Contract> contracts) {
-        this.methods = methods
+    ContractMatcher(List<Class> apis, List<Contract> contracts) {
+        this.methods = findMethods(apis)
         this.contracts = contracts
+    }
+
+    private static List<ContractoMethod> findMethods(List<Class> apis) {
+        List<ContractoMethod> methods = []
+        for(Class api: apis){
+            for (int i = 0; i < api.methods.length; i++) {
+                methods.add(new ContractoMethod(api.methods[i], api))
+            }
+        }
+        return methods
     }
 
     List<ContractMethodMatch> findMatching() {
         List<ContractMethodMatch> matches = []
         methods.each { method ->
             contracts.each { contract ->
-                if(contract.isMatching(method)){
-                    matches.add(new ContractMethodMatch(method: method, contract: contract))
+                if(contract.isMatching(method.method)){
+                    matches.add(new ContractMethodMatch(method: method.method, contract: contract))
                 }
             }
         }
@@ -29,7 +39,7 @@ class ContractMatcher {
     List<Contract> findContractsWithoutMatch() {
        return contracts.findAll{contract ->
             !methods.any{ method ->
-                contract.isMatching(method)
+                contract.isMatching(method.method)
             }
         }
     }
