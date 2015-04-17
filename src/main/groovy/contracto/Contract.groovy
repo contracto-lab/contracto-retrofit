@@ -29,4 +29,8 @@ class Contract {
         }
         return get.value()
     }
+
+    void displayWarning(){
+
+    }
 }

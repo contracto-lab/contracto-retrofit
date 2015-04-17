@@ -7,9 +7,9 @@ import java.lang.reflect.Method
 @CompileStatic
 class ContractMatcher {
     private List<Method> methods
-    private ArrayList<Contract> contracts
+    private List<Contract> contracts
 
-    ContractMatcher(List<Method> methods, ArrayList<Contract> contracts) {
+    ContractMatcher(List<Method> methods, List<Contract> contracts) {
         this.methods = methods
         this.contracts = contracts
     }
