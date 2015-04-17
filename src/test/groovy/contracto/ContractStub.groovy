@@ -11,6 +11,8 @@ class ContractStub {
     static Contract contract() {
         return new Contract(
                 request: new Request(
+                        httpMethod: HttpMethod.get,
+                        path: "/my/data",
                         meta: new Meta(
                                 request: new MetaRequest(),
                                 response: new MetaResponse(
