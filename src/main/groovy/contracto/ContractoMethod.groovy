@@ -15,6 +15,6 @@ class ContractoMethod {
     }
 
     ContractoClassType getReturnType() {
-        return ContractoClassType.from(method, inClass)
+        return ContractoClassType.fromMethod(method, inClass)
     }
 }

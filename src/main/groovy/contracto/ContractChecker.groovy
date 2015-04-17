@@ -22,7 +22,7 @@ class ContractChecker {
     }
 
     static boolean checkItemExistsInClass(ContractoClassType classType, Item item) {
-        def find = classType.type.declaredFields.find { it.name == item.name }
-        return find ? checkClassMatchItem(new ContractoClassType(type: find.type), item) : false
+        def find = classType.findDeclaredField(item.name)
+        return find ? checkClassMatchItem(find, item) : false
     }
 }
