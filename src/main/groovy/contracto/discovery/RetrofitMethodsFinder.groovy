@@ -10,7 +10,7 @@ import java.lang.reflect.Method
 
 class RetrofitMethodsFinder {
 
-    private static final ArrayList<Class<? extends Annotation>> retrofitAnnotations = [GET, POST, PUT, DELETE]
+    public static final ArrayList<Class<? extends Annotation>> retrofitAnnotations = [GET, POST, PUT, DELETE]
 
     static Collection<Method> getRetrofitMethods(Collection<Class> classes) {
         def methods = []
