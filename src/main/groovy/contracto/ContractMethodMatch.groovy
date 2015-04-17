@@ -10,6 +10,6 @@ class ContractMethodMatch {
     Contract contract
 
     boolean match() {
-        return ContractChecker.checkClassMatchItem(method.method.returnType,contract.request.meta.response.body)
+        return ContractChecker.checkMethodReturnTypeMatchItem(method,contract.request.meta.response.body)
     }
 }

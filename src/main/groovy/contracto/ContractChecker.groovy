@@ -5,6 +5,10 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class ContractChecker {
 
+    static boolean checkMethodReturnTypeMatchItem(ContractoMethod contractoMethod, Item item) {
+        return checkClassMatchItem(contractoMethod.method.returnType, item)
+    }
+
     static boolean checkClassMatchItem(Class aClass, Item item) {
         if (item.type.isSimpleType) {
             return aClass in item.type.possibleClasses
