@@ -1,12 +1,12 @@
 package contracto.matcher
 
 import client.data.MyData
+import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.model.contract.Item
 import contracto.model.contract.Type
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
 
-import static contracto.matcher.ContractChecker.checkClassMatchItem
 import static contracto.model.contract.Type.*
 
 class ContractCheckerSpec extends Specification {
@@ -43,5 +43,9 @@ class ContractCheckerSpec extends Specification {
                         ),
                 ],
         )
+    }
+
+    private boolean checkClassMatchItem(ContractoClassType classType, Item item){
+        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
     }
 }

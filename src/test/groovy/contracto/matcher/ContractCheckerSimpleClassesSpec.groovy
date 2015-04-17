@@ -1,5 +1,6 @@
 package contracto.matcher
 
+import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
@@ -10,7 +11,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
 
     def "Should recognise correct simple classes as number"() {
         expect:
-        ContractChecker.checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
+        checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
         where:
         type   | aClass  | result
         number | Integer | true
@@ -24,7 +25,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
 
     def "Should recognise correct simple classes as string"() {
         expect:
-        ContractChecker.checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
+        checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
         where:
         type   | aClass  | result
         string | Integer | false
@@ -38,7 +39,7 @@ class ContractCheckerSimpleClassesSpec extends Specification {
 
     def "Should recognise correct simple classes as boolean"() {
         expect:
-        ContractChecker.checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
+        checkClassMatchItem(new ContractoClassType(type: aClass), new Item(type: type)) == result
         where:
         type | aClass  | result
         bool | Integer | false
@@ -48,5 +49,9 @@ class ContractCheckerSimpleClassesSpec extends Specification {
         bool | String  | false
         bool | Boolean | true
         bool | boolean | true
+    }
+
+    private boolean checkClassMatchItem(ContractoClassType classType, Item item){
+        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
     }
 }
