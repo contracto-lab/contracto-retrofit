@@ -1,1 +1,4 @@
 language: groovy
+
+before_script:
+  - scripts/run_http_server &
