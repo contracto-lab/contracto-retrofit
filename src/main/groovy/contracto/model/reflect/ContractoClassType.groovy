@@ -34,15 +34,15 @@ class ContractoClassType {
         return fieldNode.type
     }
 
-    static ContractoClassType fromParameter(java.lang.reflect.Parameter parameter, int index) {
-        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromParameter.curry(parameter, index)
-        return fromClass(parameter.type, classNode)
+    static ContractoClassType fromParameter(Method method, int parameterIndex) {
+        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromParameter.curry(method, parameterIndex)
+        return fromClass(method.parameters[parameterIndex].type, classNode)
     }
 
-    private static ClassNode classNodeFromParameter(java.lang.reflect.Parameter parameter, int index) {
-        ClassNode classNode = new ClassNode(parameter.declaringExecutable.declaringClass)
-        MethodNode methodNode = classNode.methods.find { it.name == parameter.declaringExecutable.name }
-        return ReflectHelper.paramType(methodNode, index)
+    private static ClassNode classNodeFromParameter(Method method, int index) {
+        ClassNode classNode = new ClassNode(method.declaringClass)
+        MethodNode methodNode = classNode.methods.find { it.name == method.name }
+        return methodNode.parameters[index].type
     }
 
     private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> classNodeClosure) {
