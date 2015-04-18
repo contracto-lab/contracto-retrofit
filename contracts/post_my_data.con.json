@@ -1,0 +1,31 @@
+{
+  "request": {
+    "http_method": "post",
+    "path": "/my/data",
+    "meta": {
+      "request": {
+        "body": {
+          "type": "object",
+          "embedded": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "type": "object",
+          "embedded": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "responses": []
+}

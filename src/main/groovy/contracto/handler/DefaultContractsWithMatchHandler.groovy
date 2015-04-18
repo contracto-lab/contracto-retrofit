@@ -4,6 +4,9 @@ import contracto.model.ContractMethodMatch
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
+import retrofit.http.Body
+
+import java.lang.annotation.Annotation
 
 @CompileStatic
 class DefaultContractsWithMatchHandler {
@@ -11,11 +14,33 @@ class DefaultContractsWithMatchHandler {
     boolean failOnNotImplementedFields = true
 
     boolean handle(List<ContractMethodMatch> matches) {
-        return matches.every { ContractMethodMatch it ->
-            ContractoClassType returnType = it.method.returnType
-            Item item = it.contract.request.meta.response.body
-            checkClassMatchItem(returnType, item)
+        return matches.every { match ->
+            return checkResponseBody(match) &&
+                    checkRequestBody(match)
         }
+    }
+
+    private boolean checkResponseBody(ContractMethodMatch match) {
+        ContractoClassType returnType = match.method.returnType
+        Item responseBody = match.contract.request.meta.response.body
+        return checkClassMatchItem(returnType, responseBody)
+    }
+
+    private boolean checkRequestBody(ContractMethodMatch it) {
+        Item requestBody = it.contract.request.meta.request.body
+        int withBodyIndex = it.method.method.parameterAnnotations.findIndexOf(this.&withBody)
+        if (requestBody == null && withBodyIndex == -1) {
+            return true
+        }
+        if (requestBody == null || withBodyIndex == -1) {
+            return false
+        }
+        Class type = it.method.method.parameterTypes[withBodyIndex]
+        return checkClassMatchItem(new ContractoClassType(type: type), requestBody)
+    }
+
+    private boolean withBody(Annotation[] annotations) {
+        return Body in annotations*.annotationType()
     }
 
     boolean checkClassMatchItem(ContractoClassType classType, Item item) {
