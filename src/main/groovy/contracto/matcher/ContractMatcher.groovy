@@ -9,15 +9,13 @@ import groovy.transform.CompileStatic
 class ContractMatcher {
 
     List<ContractMethodMatch> findMatching(List<ContractoMethod> methods, List<Contract> contracts) {
-        List<ContractMethodMatch> matches = []
-        methods.each { method ->
-            contracts.each { contract ->
-                if (contract.isMatching(method.method)) {
-                    matches.add(new ContractMethodMatch(method: method, contract: contract))
-                }
+        return methods.collectMany { method ->
+            contracts.findAll { contract ->
+                contract.isMatching(method.method)
+            }.collect { contract ->
+                new ContractMethodMatch(method: method, contract: contract)
             }
         }
-        return matches
     }
 
     List<Contract> findContractsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
@@ -35,4 +33,5 @@ class ContractMatcher {
             }
         }
     }
+
 }
