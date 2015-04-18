@@ -17,12 +17,8 @@ class RetrofitPath {
 
     @CompileDynamic
     private static String path(Method method) {
-        Annotation annotation = method.declaredAnnotations.find(this.&inHttpMethodTypes)
+        Annotation annotation = method.declaredAnnotations.find(HttpMethod.&isHttpMethod)
         return annotation.value()
-    }
-
-    private static boolean inHttpMethodTypes(Annotation annotation) {
-        return annotation.annotationType() in HttpMethod.types
     }
 
     boolean matches(String path) {

@@ -1,9 +1,6 @@
 package contracto.model.contract
 
-import retrofit.http.DELETE
-import retrofit.http.GET
-import retrofit.http.POST
-import retrofit.http.PUT
+import retrofit.http.*
 
 import java.lang.annotation.Annotation
 import java.lang.reflect.Method
@@ -13,11 +10,13 @@ enum HttpMethod {
     get(GET),
     post(POST),
     put(PUT),
-    delete(DELETE)
+    delete(DELETE),
+    path(PATCH),
+    head(HEAD)
 
     private final Class<? extends Annotation> type
 
-    HttpMethod(Class<Annotation> type) {
+    HttpMethod(Class<? extends Annotation> type) {
         this.type = type
     }
 
@@ -28,7 +27,7 @@ enum HttpMethod {
         }
     }
 
-    static List<Class<? extends Annotation>> getTypes() {
-        return values()*.type
+    static boolean isHttpMethod(Annotation annotation) {
+        return annotation.annotationType() in values()*.type
     }
 }
