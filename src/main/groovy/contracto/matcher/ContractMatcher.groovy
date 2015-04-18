@@ -28,10 +28,7 @@ class ContractMatcher {
 
     List<ContractoMethod> findMethodsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.findAll { method ->
-            !contracts.any { contract ->
-                contract.isMatching(method.method)
-            }
+            !contracts*.isMatching(method.method).any()
         }
     }
-
 }

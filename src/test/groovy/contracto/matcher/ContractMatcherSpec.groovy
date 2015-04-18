@@ -10,12 +10,12 @@ import spock.lang.Specification
 
 class ContractMatcherSpec extends Specification {
 
+    ContractMatcher matcher = new ContractMatcher()
+
     def "Should find matches"() {
         given:
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
-        and:
-        ContractMatcher matcher = new ContractMatcher()
         when:
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
@@ -30,8 +30,6 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract()]
-        and:
-        ContractMatcher matcher = new ContractMatcher()
         when:
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
@@ -42,8 +40,6 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
-        and:
-        ContractMatcher matcher = new ContractMatcher()
         when:
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
@@ -54,8 +50,6 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
-        and:
-        ContractMatcher matcher = new ContractMatcher()
         when:
         List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
         then:
@@ -66,12 +60,19 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
-        and:
-        ContractMatcher matcher = new ContractMatcher()
         when:
         List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
         then:
         unmatched == [ContractStub.otherContract()]
+    }
+
+    def "Should find unmatched methods"() {
+        given:
+        def methods = findMethods([MyApi])
+        when:
+        List<ContractoMethod> unmatched = matcher.findMethodsWithoutMatch(methods, [])
+        then:
+        unmatched == [new ContractoMethod(MyApi.getDeclaredMethod("getMyData"))]
     }
 
     public static List<ContractoMethod> findMethods(List<Class> apis) {
