@@ -43,7 +43,7 @@ class ContractoClassType {
     private static ClassNode classNodeFromParameter(Parameter parameter, int index) {
         ClassNode classNode = new ClassNode(parameter.declaringExecutable.declaringClass)
         MethodNode methodNode = classNode.methods.find { it.name == parameter.declaringExecutable.name }
-        return methodNode.parameters[index].type
+        return ReflectHelper.paramType(methodNode, index)
     }
 
     private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> classNodeClosure) {
