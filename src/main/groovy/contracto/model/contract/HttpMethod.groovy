@@ -11,7 +11,7 @@ enum HttpMethod {
     post(POST),
     put(PUT),
     delete(DELETE),
-    path(PATCH),
+    patch(PATCH),
     head(HEAD)
 
     private final Class<? extends Annotation> type
