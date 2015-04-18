@@ -43,8 +43,7 @@ class ContractoClassType {
     private static ClassNode classNodeFromParameter(Parameter parameter, int index) {
         ClassNode classNode = new ClassNode(parameter.declaringExecutable.declaringClass)
         MethodNode methodNode = classNode.methods.find { it.name == parameter.declaringExecutable.name }
-        org.codehaus.groovy.ast.Parameter paramNode = methodNode.parameters[index]
-        return paramNode.type
+        return methodNode.parameters[index].type
     }
 
     private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> classNodeClosure) {
