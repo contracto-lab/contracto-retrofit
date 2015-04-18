@@ -1,9 +1,11 @@
 package contracto.model.reflect
 
+import groovy.transform.Canonical
 import groovy.transform.CompileStatic
 
 import java.lang.reflect.Method
 
+@Canonical
 @CompileStatic
 class ContractoMethod {
 
