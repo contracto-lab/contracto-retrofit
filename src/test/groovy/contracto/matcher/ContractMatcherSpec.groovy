@@ -92,9 +92,9 @@ class ContractMatcherSpec extends Specification {
     }
 
     public static List<ContractoMethod> findMethods(List<Class> apis) {
-        apis.collectMany { api ->
-            api.declaredMethods.collect { method ->
-                new ContractoMethod(method, api)
+        apis.collectMany {
+            it.declaredMethods.collect {
+                new ContractoMethod(it)
             }
         }
     }

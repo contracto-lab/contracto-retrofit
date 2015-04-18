@@ -12,29 +12,25 @@ import static ContractoClassType.fromMethod
 class ContractoClassTypeSpec extends Specification {
 
     static List<Integer> justMethod() {
-        return null;
+        return null
     }
 
     List<String> justField
 
     def "From method will create type with generic type equals integer"() {
         given:
-        Method justAMethod = ContractoClassTypeSpec.declaredMethods.find {
-            it.name == 'justMethod'
-        }
+        Method method = ContractoClassTypeSpec.getDeclaredMethod('justMethod')
         when:
-        ContractoClassType listType = fromMethod(justAMethod, ContractoClassTypeSpec)
+        ContractoClassType listType = fromMethod(method)
         then:
         listType.genericType == Integer
     }
 
     def "From field will create type with generic type equals integer"() {
         given:
-        Field justAField = ContractoClassTypeSpec.declaredFields.find {
-            it.name == 'justField'
-        }
+        Field field = ContractoClassTypeSpec.getDeclaredField('justField')
         when:
-        ContractoClassType listType = fromField(justAField, ContractoClassTypeSpec)
+        ContractoClassType listType = fromField(field)
         then:
         listType.genericType == String
     }

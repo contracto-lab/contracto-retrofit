@@ -11,31 +11,32 @@ import java.lang.reflect.Method
 
 @CompileStatic
 class ContractoClassType {
-    static ContractoClassType fromMethod(Method method, Class inClass) {
-        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromMethod.curry(method, inClass)
+
+    static ContractoClassType fromMethod(Method method) {
+        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromMethod.curry(method)
         return fromClass(method.returnType, classNode)
     }
 
-    private static ClassNode classNodeFromMethod(Method method, Class inClass) {
-        ClassNode classNode = new ClassNode(inClass)
+    private static ClassNode classNodeFromMethod(Method method) {
+        ClassNode classNode = new ClassNode(method.declaringClass)
         MethodNode methodNode = classNode.methods.find { it.name == method.name }
         return methodNode.returnType
     }
 
-    static ContractoClassType fromField(Field field, Class inClass) {
-        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromField.curry(field, inClass)
+    static ContractoClassType fromField(Field field) {
+        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromField.curry(field)
         return fromClass(field.type, classNode)
     }
 
-    private static ClassNode classNodeFromField(Field field, Class inClass) {
-        ClassNode classNode = new ClassNode(inClass)
+    private static ClassNode classNodeFromField(Field field) {
+        ClassNode classNode = new ClassNode(field.declaringClass)
         FieldNode fieldNode = classNode.fields.find { it.name == field.name }
         return fieldNode.type
     }
 
-    private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> typeNode) {
+    private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> classNodeClosure) {
         if (type == List) {
-            ClassNode classNode = typeNode.call()
+            ClassNode classNode = classNodeClosure.call()
             Class genericType = extractGenericType(classNode)
             return new ContractoClassType(type: type, genericType: genericType)
         } else {
@@ -43,20 +44,20 @@ class ContractoClassType {
         }
     }
 
-    private static Class extractGenericType(ClassNode returnType) {
-        GenericsType genericsType = returnType.genericsTypes[0]
+    private static Class extractGenericType(ClassNode classNode) {
+        GenericsType genericsType = classNode.genericsTypes[0]
         return genericsType.type.getTypeClass()
     }
 
     Class type
     Class genericType
 
-    ContractoClassType getGenericContractoType(){
+    ContractoClassType getGenericContractoType() {
         return new ContractoClassType(type: genericType)
     }
 
     ContractoClassType findDeclaredField(String name) {
         Field field = type.declaredFields.find { it.name == name }
-        return field ? fromField(field, type) : null
+        return field ? fromField(field) : null
     }
 }

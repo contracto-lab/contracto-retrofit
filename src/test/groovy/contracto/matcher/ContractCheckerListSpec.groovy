@@ -9,7 +9,6 @@ import static contracto.model.contract.Type.*
 
 class ContractCheckerListSpec extends Specification {
 
-
     def "Should return true when list object match body"() {
         given:
         ContractoClassType type = stringListType()
@@ -38,7 +37,6 @@ class ContractCheckerListSpec extends Specification {
         ))
     }
 
-
     def "Should return false when is not a list"() {
         expect:
         !checkClassMatchItem(new ContractoClassType(type: Integer), new Item(
@@ -54,12 +52,11 @@ class ContractCheckerListSpec extends Specification {
     List<String> stringList
 
     private ContractoClassType stringListType() {
-        return ContractoClassType.fromField(ContractCheckerListSpec.declaredFields.find {
-            it.name == 'stringList'
-        }, ContractCheckerListSpec)
+        def field = ContractCheckerListSpec.getDeclaredField('stringList')
+        return ContractoClassType.fromField(field)
     }
 
-    private boolean checkClassMatchItem(ContractoClassType classType, Item item){
-       return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
+    private boolean checkClassMatchItem(ContractoClassType classType, Item item) {
+        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
     }
 }

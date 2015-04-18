@@ -8,11 +8,11 @@ import groovy.transform.CompileStatic
 class ContractoMethodFinder {
 
     public List<ContractoMethod> findRetrofitMethods(List<Class> apis) {
-        apis.collectMany { api ->
-            api.declaredMethods.findAll { method ->
-                method.declaredAnnotations.any(HttpMethod.&isHttpMethod)
-            }.collect { method ->
-                new ContractoMethod(method, api)
+        apis.collectMany {
+            it.declaredMethods.findAll {
+                it.declaredAnnotations.any(HttpMethod.&isHttpMethod)
+            }.collect {
+                new ContractoMethod(it)
             }
         }
     }
