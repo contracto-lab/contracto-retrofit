@@ -1,6 +1,5 @@
 package contracto.model.contract
 
-import contracto.discovery.RetrofitMethodsFinder
 import groovy.transform.Canonical
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
@@ -19,15 +18,19 @@ class Contract {
     }
 
     HttpMethod httpMethod(Method method) {
-        return HttpMethod.get
+        return HttpMethod.values().find { httpMethod ->
+            method.declaredAnnotations*.annotationType().any {
+                it == httpMethod.annotation
+            }
+        }
     }
 
     @CompileDynamic
     String path(Method method) {
-        Annotation get = method.declaredAnnotations.find {
-            it.annotationType() in RetrofitMethodsFinder.retrofitAnnotations
+        Annotation retrofitAnnotation = method.declaredAnnotations.find {
+            it.annotationType() in HttpMethod.values()*.annotation
         }
-        return get.value()
+        return retrofitAnnotation.value()
     }
 
     void displayWarning() {
