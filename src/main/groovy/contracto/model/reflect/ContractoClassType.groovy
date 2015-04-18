@@ -51,6 +51,10 @@ class ContractoClassType {
     Class type
     Class genericType
 
+    ContractoClassType getGenericContractoType(){
+        return new ContractoClassType(type: genericType)
+    }
+
     ContractoClassType findDeclaredField(String name) {
         Field field = type.declaredFields.find { it.name == name }
         return field ? fromField(field, type) : null
