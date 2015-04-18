@@ -15,16 +15,20 @@ enum HttpMethod {
     put(PUT),
     delete(DELETE)
 
-    final Class<? extends Annotation> annotation
+    private final Class<? extends Annotation> type
 
-    HttpMethod(Class<Annotation> annotation) {
-        this.annotation = annotation
+    HttpMethod(Class<Annotation> type) {
+        this.type = type
     }
 
     static HttpMethod of(Method method) {
         def types = method.declaredAnnotations*.annotationType()
         return values().find { httpMethod ->
-            httpMethod.annotation in types
+            httpMethod.type in types
         }
+    }
+
+    static List<Class<? extends Annotation>> getTypes() {
+        return values()*.type
     }
 }

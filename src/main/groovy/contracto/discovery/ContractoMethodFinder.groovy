@@ -10,7 +10,7 @@ class ContractoMethodFinder {
     public List<ContractoMethod> findRetrofitMethods(List<Class> apis) {
         apis.collectMany { api ->
             api.declaredMethods.findAll {
-                it.declaredAnnotations*.annotationType().any { it in HttpMethod.values()*.annotation }
+                it.declaredAnnotations*.annotationType().any { it in HttpMethod.types }
             }.collect {
                 new ContractoMethod(it, api)
             }
