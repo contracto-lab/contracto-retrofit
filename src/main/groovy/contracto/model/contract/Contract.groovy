@@ -14,15 +14,7 @@ class Contract {
     Request request
 
     boolean isMatching(Method method) {
-        return httpMethod(method) == request.httpMethod && path(method) == request.path
-    }
-
-    HttpMethod httpMethod(Method method) {
-        return HttpMethod.values().find { httpMethod ->
-            method.declaredAnnotations*.annotationType().any {
-                it == httpMethod.annotation
-            }
-        }
+        return HttpMethod.of(method) == request.httpMethod && path(method) == request.path
     }
 
     @CompileDynamic

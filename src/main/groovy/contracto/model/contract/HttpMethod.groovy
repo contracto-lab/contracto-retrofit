@@ -6,6 +6,7 @@ import retrofit.http.POST
 import retrofit.http.PUT
 
 import java.lang.annotation.Annotation
+import java.lang.reflect.Method
 
 enum HttpMethod {
 
@@ -18,5 +19,12 @@ enum HttpMethod {
 
     HttpMethod(Class<Annotation> annotation) {
         this.annotation = annotation
+    }
+
+    static HttpMethod of(Method method) {
+        def types = method.declaredAnnotations*.annotationType()
+        return values().find { httpMethod ->
+            httpMethod.annotation in types
+        }
     }
 }
