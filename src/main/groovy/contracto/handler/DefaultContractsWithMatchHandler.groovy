@@ -35,8 +35,8 @@ class DefaultContractsWithMatchHandler {
         if (requestBody == null || withBodyIndex == -1) {
             return false
         }
-        Class type = it.method.method.parameterTypes[withBodyIndex]
-        return checkClassMatchItem(new ContractoClassType(type: type), requestBody)
+        ContractoClassType type = ContractoClassType.fromParameter(it.method.method.parameters[withBodyIndex], withBodyIndex)
+        return checkClassMatchItem(type, requestBody)
     }
 
     private boolean withBody(Annotation[] annotations) {

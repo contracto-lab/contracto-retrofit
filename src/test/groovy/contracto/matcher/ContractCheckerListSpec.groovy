@@ -1,6 +1,7 @@
 package contracto.matcher
 
 import contracto.handler.DefaultContractsWithMatchHandler
+import contracto.model.ContractStub
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
@@ -13,14 +14,7 @@ class ContractCheckerListSpec extends Specification {
         given:
         ContractoClassType type = stringListType()
         expect:
-        checkClassMatchItem(type, new Item(
-                type: array,
-                embedded: [
-                        new Item(
-                                type: string,
-                        ),
-                ],
-        ))
+        checkClassMatchItem(type, ContractStub.stringArray())
     }
 
     def "Should return false when list type is wrong"() {

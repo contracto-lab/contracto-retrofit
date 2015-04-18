@@ -8,6 +8,7 @@ import org.codehaus.groovy.ast.MethodNode
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
+import java.lang.reflect.Parameter
 
 @CompileStatic
 class ContractoClassType {
@@ -34,6 +35,18 @@ class ContractoClassType {
         return fieldNode.type
     }
 
+    static ContractoClassType fromParameter(Parameter parameter, int index) {
+        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromParameter.curry(parameter, index)
+        return fromClass(parameter.type, classNode)
+    }
+
+    private static ClassNode classNodeFromParameter(Parameter parameter, int index) {
+        ClassNode classNode = new ClassNode(parameter.declaringExecutable.declaringClass)
+        MethodNode methodNode = classNode.methods.find { it.name == parameter.declaringExecutable.name }
+        org.codehaus.groovy.ast.Parameter paramNode = methodNode.parameters[index]
+        return paramNode.type
+    }
+
     private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> classNodeClosure) {
         if (type == List) {
             ClassNode classNode = classNodeClosure.call()
@@ -48,8 +61,8 @@ class ContractoClassType {
         GenericsType genericsType = classNode.genericsTypes[0]
         return genericsType.type.getTypeClass()
     }
-
     Class type
+
     Class genericType
 
     ContractoClassType getGenericContractoType() {

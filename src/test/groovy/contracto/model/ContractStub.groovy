@@ -3,6 +3,7 @@ package contracto.model
 import contracto.model.contract.*
 import groovy.transform.CompileStatic
 
+import static contracto.model.contract.Type.array
 import static contracto.model.contract.Type.object
 import static contracto.model.contract.Type.string
 
@@ -61,6 +62,17 @@ class ContractStub {
                         ),
                         new Item(
                                 name: 'surname',
+                                type: string,
+                        ),
+                ],
+        )
+    }
+
+    static Item stringArray() {
+        new Item(
+                type: array,
+                embedded: [
+                        new Item(
                                 type: string,
                         ),
                 ],
