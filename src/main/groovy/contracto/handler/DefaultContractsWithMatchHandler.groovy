@@ -2,7 +2,6 @@ package contracto.handler
 
 import contracto.model.ContractMethodMatch
 import contracto.model.contract.Item
-import contracto.model.contract.Type
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 
@@ -20,12 +19,14 @@ class DefaultContractsWithMatchHandler {
     }
 
     boolean checkClassMatchItem(ContractoClassType classType, Item item) {
-        if (item.type.isSimpleType) {
+        if (item.type.simple) {
             return checkSimpleTypeMatch(classType, item)
-        } else if (item.type == Type.object) {
+        } else if (item.type.object) {
             return checkObjectTypeMatch(classType, item)
-        } else {
+        } else if (item.type.array) {
             return checkArrayTypeMatch(classType, item)
+        } else {
+            throw new IllegalArgumentException("You shall not pass!")
         }
     }
 
@@ -52,7 +53,7 @@ class DefaultContractsWithMatchHandler {
     }
 
     private boolean checkSimpleTypeMatch(ContractoClassType classType, Item item) {
-        return classType.type in item.type.possibleClasses
+        return item.type.possibleClasses.any { it.isAssignableFrom(classType.type) }
     }
 
     private boolean checkArrayTypeMatch(ContractoClassType classType, Item item) {

@@ -2,34 +2,27 @@ package contracto.model.contract
 
 enum Type {
 
-    object(false),
-    string(true){
-        @Override
-        List<Class> getPossibleClasses() {
-            return [String]
-        }
-    },
-    number(true){
-        @Override
-        List<Class> getPossibleClasses() {
-            return [Integer, int, Number, double]
-        }
-    },
-    bool(true){
-        @Override
-        List<Class> getPossibleClasses() {
-            return [Boolean, boolean]
-        }
-    },
-    array(false)
+    object([]),
+    string([String]),
+    number([Number, int, long, float, double]),
+    bool([Boolean, boolean]),
+    array([])
 
-    final boolean isSimpleType
+    final List<Class> possibleClasses
 
-    Type(boolean isSimpleType) {
-        this.isSimpleType = isSimpleType
+    Type(List<Class> possibleClasses) {
+        this.possibleClasses = possibleClasses
     }
 
-    List<Class> getPossibleClasses() {
-        return []
+    boolean isSimple() {
+        return possibleClasses.size() > 0
+    }
+
+    boolean isObject() {
+        return this == object
+    }
+
+    boolean isArray() {
+        return this == array
     }
 }
