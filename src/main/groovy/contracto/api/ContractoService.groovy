@@ -11,17 +11,22 @@ class ContractoService {
 
     List<Contract> downloadContracts(Collection<String> urls) {
         return urls.collect { String url ->
-            def lastSlash = url.lastIndexOf('/')
-            def endpoint = url.substring(0, lastSlash)
-            def contract = url.substring(lastSlash + 1)
+            def (String endpoint, String contract) = splitAtLastSlash(url)
             def adapter = createRestAdapter(endpoint)
             def api = adapter.create(ContractoApi)
             return api.call(contract)
         }
     }
 
-    private RestAdapter createRestAdapter(String endpoint) {
-        new RestAdapter.Builder()
+    private static List<String> splitAtLastSlash(String url) {
+        def lastSlash = url.lastIndexOf('/')
+        def endpoint = url.substring(0, lastSlash)
+        def contract = url.substring(lastSlash + 1)
+        return [endpoint, contract]
+    }
+
+    private static RestAdapter createRestAdapter(String endpoint) {
+        return new RestAdapter.Builder()
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(createGson()))
                 .build()
