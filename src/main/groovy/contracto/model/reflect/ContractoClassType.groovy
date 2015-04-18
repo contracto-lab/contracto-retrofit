@@ -8,7 +8,6 @@ import org.codehaus.groovy.ast.MethodNode
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
-import java.lang.reflect.Parameter
 
 @CompileStatic
 class ContractoClassType {
@@ -35,12 +34,12 @@ class ContractoClassType {
         return fieldNode.type
     }
 
-    static ContractoClassType fromParameter(Parameter parameter, int index) {
+    static ContractoClassType fromParameter(java.lang.reflect.Parameter parameter, int index) {
         Closure<ClassNode> classNode = ContractoClassType.&classNodeFromParameter.curry(parameter, index)
         return fromClass(parameter.type, classNode)
     }
 
-    private static ClassNode classNodeFromParameter(Parameter parameter, int index) {
+    private static ClassNode classNodeFromParameter(java.lang.reflect.Parameter parameter, int index) {
         ClassNode classNode = new ClassNode(parameter.declaringExecutable.declaringClass)
         MethodNode methodNode = classNode.methods.find { it.name == parameter.declaringExecutable.name }
         return ReflectHelper.paramType(methodNode, index)
