@@ -1,0 +1,46 @@
+{
+  "request": {
+    "http_method": "get",
+    "path": "/users/:id",
+    "meta": {
+      "request": {
+        "path_params": [
+          {
+            "name": "id",
+            "type": "string"
+          }
+        ]
+      },
+      "response": {
+        "body": {
+          "type": "object",
+          "embedded": [
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "age",
+              "type": "number"
+            },
+            {
+              "name": "address",
+              "type": "object",
+              "embedded": [
+                {
+                  "name": "street",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "responses": []
+}
