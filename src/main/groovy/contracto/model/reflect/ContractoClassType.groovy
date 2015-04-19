@@ -36,7 +36,7 @@ class ContractoClassType {
 
     static ContractoClassType fromParameter(Method method, int parameterIndex) {
         Closure<ClassNode> classNode = ContractoClassType.&classNodeFromParameter.curry(method, parameterIndex)
-        return fromClass(method.parameters[parameterIndex].type, classNode)
+        return fromClass(method.parameterTypes[parameterIndex], classNode)
     }
 
     private static ClassNode classNodeFromParameter(Method method, int index) {
