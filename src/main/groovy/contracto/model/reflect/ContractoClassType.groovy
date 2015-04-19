@@ -1,5 +1,7 @@
 package contracto.model.reflect
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.annotations.SerializedName
 import groovy.transform.CompileStatic
 import rx.Observable
 
@@ -30,8 +32,17 @@ class ContractoClassType {
     Type type
 
     ContractoClassType findDeclaredField(String name) {
-        Field field = toClass().declaredFields.find { it.name == name }
+        Field field = toClass().declaredFields.find { name == jsonNameForField(it) }
         return field ? fromField(field) : null
+    }
+
+    private String jsonNameForField(Field field) {
+        def annotation = field.getAnnotation(SerializedName)
+        if (annotation) {
+            return annotation.value()
+        } else {
+            return FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES.translateName(field)
+        }
     }
 
     private Class toClass() {
