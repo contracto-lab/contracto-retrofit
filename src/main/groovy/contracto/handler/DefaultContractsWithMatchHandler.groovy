@@ -7,6 +7,8 @@ import groovy.transform.CompileStatic
 import retrofit.http.Body
 
 import java.lang.annotation.Annotation
+import java.lang.reflect.GenericArrayType
+import java.lang.reflect.ParameterizedType
 
 @CompileStatic
 class DefaultContractsWithMatchHandler {
@@ -82,6 +84,17 @@ class DefaultContractsWithMatchHandler {
     }
 
     private boolean checkArrayTypeMatch(ContractoClassType classType, Item item) {
-        return classType.type == List && checkClassMatchItem(classType.genericContractoType, item.embedded.first())
+        if (classType.type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) classType.type
+            if (List.isAssignableFrom((Class) parameterizedType.rawType)) {
+                def cct = new ContractoClassType(type: parameterizedType.actualTypeArguments[0])
+                return checkClassMatchItem(cct, item.embedded.first())
+            }
+        } else if (classType.type instanceof GenericArrayType) {
+            GenericArrayType genericArrayType = (GenericArrayType) classType.type
+            def cct = new ContractoClassType(type: genericArrayType.genericComponentType)
+            return checkClassMatchItem(cct, item.embedded.first())
+        }
+        return false
     }
 }

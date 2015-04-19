@@ -33,6 +33,6 @@ class ContractoClassTypeSpec extends Specification {
         when:
         ContractoClassType listType = fromField(field)
         then:
-        listType.genericType == String
+        ((ParameterizedType) listType.type).actualTypeArguments[0] == String
     }
 }
