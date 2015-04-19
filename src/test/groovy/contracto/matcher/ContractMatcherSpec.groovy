@@ -1,7 +1,9 @@
 package contracto.matcher
 
 import client.api.MyApi
+import client.api.MyObservableApi
 import client.api.OtherApi
+import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.Contract
@@ -73,6 +75,17 @@ class ContractMatcherSpec extends Specification {
         List<ContractoMethod> unmatched = matcher.findMethodsWithoutMatch(methods, [])
         then:
         unmatched == [new ContractoMethod(MyApi.getDeclaredMethod("getMyData"))]
+    }
+
+    def "Should find match for both synchronized and observable call"() {
+        given:
+        def methods = findMethods([MyApi, MyObservableApi])
+        def contracts = [ContractStub.contract()]
+        when:
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        boolean result = new DefaultContractsWithMatchHandler().handle(matches)
+        then:
+        result
     }
 
     public static List<ContractoMethod> findMethods(List<Class> apis) {

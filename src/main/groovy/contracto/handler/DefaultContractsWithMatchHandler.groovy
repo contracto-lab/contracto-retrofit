@@ -78,7 +78,7 @@ class DefaultContractsWithMatchHandler {
     }
 
     private boolean checkSimpleTypeMatch(ContractoClassType classType, Item item) {
-        return item.type.possibleClasses.any { it.isAssignableFrom(classType.type) }
+        return item.type.possibleClasses.any { it.isAssignableFrom((Class) classType.type) }
     }
 
     private boolean checkArrayTypeMatch(ContractoClassType classType, Item item) {

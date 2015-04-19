@@ -5,22 +5,18 @@ import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.FieldNode
 import org.codehaus.groovy.ast.GenericsType
 import org.codehaus.groovy.ast.MethodNode
+import rx.Observable
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 @CompileStatic
 class ContractoClassType {
 
     static ContractoClassType fromMethod(Method method) {
-        Closure<ClassNode> classNode = ContractoClassType.&classNodeFromMethod.curry(method)
-        return fromClass(method.returnType, classNode)
-    }
-
-    private static ClassNode classNodeFromMethod(Method method) {
-        ClassNode classNode = new ClassNode(method.declaringClass)
-        MethodNode methodNode = classNode.methods.find { it.name == method.name }
-        return methodNode.returnType
+        return fromClass(method.genericReturnType)
     }
 
     static ContractoClassType fromField(Field field) {
@@ -45,6 +41,10 @@ class ContractoClassType {
         return methodNode.parameters[index].type
     }
 
+    private static ContractoClassType fromClass(Type type) {
+        return new ContractoClassType(type: type)
+    }
+
     private static ContractoClassType fromClass(Class<?> type, Closure<ClassNode> classNodeClosure) {
         if (type == List) {
             ClassNode classNode = classNodeClosure.call()
@@ -59,8 +59,8 @@ class ContractoClassType {
         GenericsType genericsType = classNode.genericsTypes[0]
         return genericsType.type.getTypeClass()
     }
-    Class type
 
+    Type type
     Class genericType
 
     ContractoClassType getGenericContractoType() {
@@ -68,7 +68,17 @@ class ContractoClassType {
     }
 
     ContractoClassType findDeclaredField(String name) {
-        Field field = type.declaredFields.find { it.name == name }
+        Field field = toClass().declaredFields.find { it.name == name }
         return field ? fromField(field) : null
+    }
+
+    private Class toClass() {
+        if (this.type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) type
+            if (parameterizedType.rawType == Observable) {
+                return (Class) parameterizedType.actualTypeArguments[0]
+            }
+        }
+        return (Class) this.type
     }
 }
