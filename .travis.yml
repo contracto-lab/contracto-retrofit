@@ -1,4 +1,9 @@
 language: groovy
 
+jdk:
+  - oraclejdk8
+  - orablejdk7
+  - openjdk7
+
 before_script:
   - scripts/run_http_server &
