@@ -23,11 +23,11 @@ enum HttpMethod {
     static HttpMethod of(Method method) {
         def types = method.declaredAnnotations*.annotationType()
         return values().find { httpMethod ->
-            httpMethod.type in types
+            types.contains(httpMethod.type)
         }
     }
 
     static boolean isHttpMethod(Annotation annotation) {
-        return annotation.annotationType() in values()*.type
+        return values()*.type.contains(annotation.annotationType())
     }
 }

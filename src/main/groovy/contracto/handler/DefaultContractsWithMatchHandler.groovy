@@ -42,7 +42,7 @@ class DefaultContractsWithMatchHandler {
     }
 
     private boolean withBody(Annotation[] annotations) {
-        return Body in annotations*.annotationType()
+        return annotations*.annotationType().contains(Body)
     }
 
     boolean checkClassMatchItem(ContractoClassType classType, Item item) {
