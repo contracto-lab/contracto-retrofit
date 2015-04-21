@@ -3,18 +3,22 @@ package contracto.matcher
 import contracto.model.ContractMethodMatch
 import contracto.model.MatchResult
 import contracto.model.contract.Contract
-import contracto.model.HttpMethod
-import contracto.model.RetrofitPath
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class ContractMatcher {
+class ContractMatcherFinder {
+
+    ContractMatcher contractMatcher
+
+    ContractMatcherFinder(ContractMatcher contractMatcher) {
+        this.contractMatcher = contractMatcher
+    }
 
     List<ContractMethodMatch> findMatching(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.collectMany { method ->
             contracts.findAll { contract ->
-                isMatching(contract, method)
+                contractMatcher.isMatching(contract, method)
             }.collect { contract ->
                 new ContractMethodMatch(method: method, contract: contract)
             }
@@ -24,15 +28,15 @@ class ContractMatcher {
     List<Contract> findContractsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return contracts.findAll { contract ->
             !methods.any { method ->
-                isMatching(contract, method)
+                contractMatcher.isMatching(contract, method)
             }
         }
     }
 
     List<ContractoMethod> findMethodsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.findAll { method ->
-            !contracts.any{ contract ->
-                isMatching(contract,method)
+            !contracts.any { contract ->
+                contractMatcher.isMatching(contract, method)
             }
         }
     }
@@ -45,8 +49,7 @@ class ContractMatcher {
         )
     }
 
-    private boolean isMatching(Contract contract, ContractoMethod method) {
-        return HttpMethod.of(method.method).name() == contract.request.httpMethod &&
-                RetrofitPath.from(method.method).matches(contract.request.path)
+    interface ContractMatcher{
+        boolean isMatching(Contract contract, ContractoMethod method)
     }
 }

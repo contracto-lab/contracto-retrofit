@@ -12,7 +12,7 @@ import spock.lang.Specification
 
 class ContractMatcherSpec extends Specification {
 
-    ContractMatcher matcher = new ContractMatcher()
+    ContractMatcherFinder matcher = new ContractMatcherFinder(new RetrofitContractMatcher())
 
     def "Should find matches"() {
         given:
