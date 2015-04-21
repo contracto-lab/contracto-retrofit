@@ -6,10 +6,15 @@ repositories {
     jcenter()
 }
 
+test {
+    dependsOn(':contracto-jvm-core:test')
+}
+
 dependencies {
     compile project(':contracto-jvm-core')
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'io.reactivex:rxjava:1.0.9'
+    testCompile project(':contracto-jvm-core').sourceSets.test.output
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
