@@ -7,7 +7,7 @@ import java.lang.reflect.Method
 
 @Canonical
 @CompileStatic
-class ContractoMethod {
+abstract class ContractoMethod {
 
     final Method method
 
@@ -15,7 +15,5 @@ class ContractoMethod {
         this.method = method
     }
 
-    ContractoClassType getReturnType() {
-        return ContractoClassType.fromMethod(method)
-    }
+    abstract ContractoClassType getReturnType()
 }

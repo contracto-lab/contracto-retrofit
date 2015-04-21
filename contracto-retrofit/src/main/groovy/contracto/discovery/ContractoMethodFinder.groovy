@@ -1,6 +1,7 @@
 package contracto.discovery
 
 import contracto.model.HttpMethod
+import contracto.model.RetrofitContractoMethod
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
@@ -12,7 +13,7 @@ class ContractoMethodFinder {
             it.declaredMethods.findAll {
                 it.declaredAnnotations.any(HttpMethod.&isHttpMethod)
             }.collect {
-                new ContractoMethod(it)
+                new RetrofitContractoMethod(it)
             }
         }
     }

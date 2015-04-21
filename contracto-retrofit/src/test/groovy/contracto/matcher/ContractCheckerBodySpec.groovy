@@ -4,6 +4,7 @@ import client.data.MyData
 import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
+import contracto.model.RetrofitContractoMethod
 import contracto.model.contract.*
 import contracto.model.reflect.ContractoMethod
 import retrofit.http.Body
@@ -49,7 +50,7 @@ class ContractCheckerBodySpec extends Specification {
     }
 
     private ContractoMethod aMethod(String name) {
-        return new ContractoMethod(ContractCheckerBodySpec.methods.find {
+        return new RetrofitContractoMethod(ContractCheckerBodySpec.methods.find {
             it.name == name
         })
     }

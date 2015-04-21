@@ -3,11 +3,9 @@ package contracto.model.reflect
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.annotations.SerializedName
 import groovy.transform.CompileStatic
-import rx.Observable
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
-import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 @CompileStatic
@@ -31,8 +29,8 @@ class ContractoClassType {
 
     Type type
 
-    ContractoClassType findDeclaredField(String name) {
-        Field field = toClass().declaredFields.find { name == jsonNameForField(it) }
+    ContractoClassType findDeclaredField(String name, ToClass toClass) {
+        Field field = toClass.toClass(this).declaredFields.find { name == jsonNameForField(it) }
         return field ? fromField(field) : null
     }
 
@@ -45,13 +43,8 @@ class ContractoClassType {
         }
     }
 
-    private Class toClass() {
-        if (this.type instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) type
-            if (parameterizedType.rawType == Observable) {
-                return (Class) parameterizedType.actualTypeArguments[0]
-            }
-        }
-        return (Class) this.type
+    interface ToClass{
+        Class toClass(ContractoClassType contractoClassType)
     }
+
 }

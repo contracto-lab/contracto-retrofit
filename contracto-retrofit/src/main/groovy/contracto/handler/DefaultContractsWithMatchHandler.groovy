@@ -63,7 +63,7 @@ class DefaultContractsWithMatchHandler {
                 return false
         }
         return existingFields(classType, item).every {
-            checkClassMatchItem(classType.findDeclaredField(it.name), it)
+            checkClassMatchItem(classType.findDeclaredField(it.name, new ToClassImpl()), it)
         }
     }
 
@@ -76,7 +76,7 @@ class DefaultContractsWithMatchHandler {
     }
 
     private boolean existsInClass(ContractoClassType classType, Item item) {
-        return classType.findDeclaredField(item.name) != null
+        return classType.findDeclaredField(item.name, new ToClassImpl()) != null
     }
 
     private boolean checkSimpleTypeMatch(ContractoClassType classType, Item item) {
