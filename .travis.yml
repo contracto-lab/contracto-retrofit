@@ -5,8 +5,14 @@ jdk:
   - oraclejdk7
   - openjdk7
 
+env:
+  matrix:
+    - MODULE=contracto-retrofit
+    - MODULE=contracto-spring
+
+
 before_script:
   - scripts/run_http_server &
 
 script:
-  - ./gradlew :contracto-retrofit:test
+  - ./gradlew :$MODULE:test
