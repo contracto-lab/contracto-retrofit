@@ -9,9 +9,6 @@ import contracto.model.reflect.ContractoMethod
 import retrofit.http.Body
 import spock.lang.Specification
 
-import static contracto.model.contract.Type.array
-import static contracto.model.contract.Type.string
-
 class ContractCheckerBodySpec extends Specification {
 
     void justMethod(@Body MyData myData){
