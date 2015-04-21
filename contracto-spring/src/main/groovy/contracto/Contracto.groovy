@@ -1,7 +1,7 @@
 package contracto
 
 import contracto.api.ContractoService
-import contracto.handler.ContractoMethodFinder
+import contracto.discovery.ContractoMethodFinder
 import contracto.handler.MatchResultHandler
 import contracto.matcher.ContractMatcher
 import contracto.model.MatchResult
@@ -12,14 +12,15 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class Contracto {
     private ContractoService service = new ContractoService()
-    private ContractoMethodFinder methodFinder = new ContractoMethodFinder()
+    private ContractoMethodFinder methodExtractor = new ContractoMethodFinder()
     private ContractMatcher matcher = new ContractMatcher()
     private MatchResultHandler matchesHandler = new MatchResultHandler()
 
-    boolean checkContracts(Collection<Class> controllers, Collection<String> urls) {
-        Collection<Contract> contracts = service.downloadContracts(urls)
-        Collection<ContractoMethod> controllerMethods = methodFinder.findMethods(controllers)
-        MatchResult matchResult = matcher.calculateMatchResult(controllerMethods, contracts)
+    boolean checkContracts(List<Class> apis, List<String> urls) {
+        List<Contract> contracts = service.downloadContracts(urls)
+        List<ContractoMethod> retrofitMethods = methodExtractor.findRetrofitMethods(apis)
+        MatchResult matchResult = matcher.calculateMatchResult(retrofitMethods, contracts)
         return matchesHandler.isSuccessfullyMatched(matchResult)
     }
+
 }

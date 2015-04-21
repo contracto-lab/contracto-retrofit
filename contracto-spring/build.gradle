@@ -5,6 +5,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':contracto-jvm-core')
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile 'org.springframework:spring-web:4.1.6.RELEASE'
     compile 'com.squareup.retrofit:retrofit:1.9.0'

@@ -1,4 +1,4 @@
-package contracto.model.contract
+package contracto.model
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic

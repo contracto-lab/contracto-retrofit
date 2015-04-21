@@ -1,7 +1,9 @@
 package contracto.matcher
 
 import contracto.model.ContractMethodMatch
+import contracto.model.HttpMethod
 import contracto.model.MatchResult
+import contracto.model.RetrofitPath
 import contracto.model.contract.Contract
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
@@ -9,35 +11,42 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class ContractMatcher {
 
-    Collection<ContractMethodMatch> findMatching(Collection<ContractoMethod> methods, Collection<Contract> contracts) {
+    List<ContractMethodMatch> findMatching(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.collectMany { method ->
             contracts.findAll { contract ->
-                contract.isMatching(method.method)
+                isMatching(contract, method)
             }.collect { contract ->
                 new ContractMethodMatch(method: method, contract: contract)
             }
         }
     }
 
-    Collection<Contract> findContractsWithoutMatch(Collection<ContractoMethod> methods, Collection<Contract> contracts) {
+    List<Contract> findContractsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return contracts.findAll { contract ->
             !methods.any { method ->
-                contract.isMatching(method.method)
+                isMatching(contract, method)
             }
         }
     }
 
-    Collection<ContractoMethod> findMethodsWithoutMatch(Collection<ContractoMethod> methods, Collection<Contract> contracts) {
+    List<ContractoMethod> findMethodsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.findAll { method ->
-            !contracts*.isMatching(method.method).any()
+            !contracts.any { contract ->
+                isMatching(contract, method)
+            }
         }
     }
 
-    MatchResult calculateMatchResult(Collection<ContractoMethod> contractoMethods, Collection<Contract> contracts) {
+    MatchResult calculateMatchResult(List<ContractoMethod> contractoMethods, List<Contract> contracts) {
         return new MatchResult(
                 matches: findMatching(contractoMethods, contracts),
                 unmatchedContracts: findContractsWithoutMatch(contractoMethods, contracts),
                 unmatchedMethods: findMethodsWithoutMatch(contractoMethods, contracts)
         )
+    }
+
+    private boolean isMatching(Contract contract, ContractoMethod method) {
+        return HttpMethod.of(method.method).name() == contract.request.httpMethod &&
+                RetrofitPath.from(method.method).matches(contract.request.path)
     }
 }

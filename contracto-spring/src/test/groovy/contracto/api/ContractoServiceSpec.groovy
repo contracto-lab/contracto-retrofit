@@ -10,8 +10,9 @@ class ContractoServiceSpec extends Specification {
         given:
         List<Contract> contracts = new ContractoService().downloadContracts([
                 "http://localhost:13579/contracts/my_data.con.json",
+                "http://localhost:13579/contracts/other_data.con.json",
         ])
         expect:
-        contracts == [ContractStub.contract()]
+        contracts == [ContractStub.contract(), ContractStub.otherContract()]
     }
 }

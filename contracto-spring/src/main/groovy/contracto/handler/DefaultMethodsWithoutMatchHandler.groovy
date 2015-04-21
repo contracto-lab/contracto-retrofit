@@ -7,7 +7,7 @@ import groovy.transform.CompileStatic
 class DefaultMethodsWithoutMatchHandler {
     boolean failOnMethodsWithoutMatch = false
 
-    boolean handle(Collection<ContractoMethod> contractoMethods) {
+    boolean handle(List<ContractoMethod> contractoMethods) {
         return contractoMethods.isEmpty() ? true : !failOnMethodsWithoutMatch
     }
 }

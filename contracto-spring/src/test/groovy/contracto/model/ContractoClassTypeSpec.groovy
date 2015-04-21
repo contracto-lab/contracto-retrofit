@@ -5,6 +5,7 @@ import spock.lang.Specification
 
 import java.lang.reflect.Field
 import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
 
 import static ContractoClassType.fromField
 import static ContractoClassType.fromMethod
@@ -23,7 +24,7 @@ class ContractoClassTypeSpec extends Specification {
         when:
         ContractoClassType listType = fromMethod(method)
         then:
-        listType.genericType == Integer
+        ((ParameterizedType) listType.type).actualTypeArguments[0] == Integer
     }
 
     def "From field will create type with generic type equals integer"() {
@@ -32,6 +33,6 @@ class ContractoClassTypeSpec extends Specification {
         when:
         ContractoClassType listType = fromField(field)
         then:
-        listType.genericType == String
+        ((ParameterizedType) listType.type).actualTypeArguments[0] == String
     }
 }

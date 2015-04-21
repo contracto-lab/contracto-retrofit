@@ -7,7 +7,7 @@ import groovy.transform.CompileStatic
 class DefaultContractsWithoutMatchHandler {
     boolean failOnContractsWithoutMatch = false;
 
-    boolean handle(Collection<Contract> contracts) {
+    boolean handle(List<Contract> contracts) {
         contracts*.displayWarning()
         return contracts.isEmpty() ? true : !failOnContractsWithoutMatch;
     }

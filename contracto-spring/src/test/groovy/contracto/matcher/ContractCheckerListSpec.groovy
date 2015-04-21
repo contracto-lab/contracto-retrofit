@@ -1,5 +1,6 @@
 package contracto.matcher
 
+import com.google.gson.reflect.TypeToken
 import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.model.ContractStub
 import contracto.model.contract.Item
@@ -44,11 +45,8 @@ class ContractCheckerListSpec extends Specification {
         ))
     }
 
-    List<String> stringList
-
     private ContractoClassType stringListType() {
-        def field = ContractCheckerListSpec.getDeclaredField('stringList')
-        return ContractoClassType.fromField(field)
+        return new ContractoClassType(type: new TypeToken<List<String>>() {}.type)
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item) {
