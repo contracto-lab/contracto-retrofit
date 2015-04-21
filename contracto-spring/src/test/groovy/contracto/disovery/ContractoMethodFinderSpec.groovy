@@ -3,7 +3,6 @@ package contracto.disovery
 import client.controller.MyDataController
 import client.controller.SecondMyDataController
 import contracto.discovery.ContractoMethodFinder
-import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
 class ContractoMethodFinderSpec extends Specification {
@@ -19,9 +18,7 @@ class ContractoMethodFinderSpec extends Specification {
 
         then:
         foundMethods.size() > 0
-        foundMethods.every {
-            ContractoMethod m -> m.method.getName() == "myData"
-        }
+        foundMethods*.method*.name == ['myData']
     }
 
     def "Should find all method when class is annotated"() {
@@ -33,8 +30,6 @@ class ContractoMethodFinderSpec extends Specification {
 
         then:
         foundMethods.size() > 0
-        foundMethods.every {
-            ContractoMethod m -> m.method.getName() == "myData"
-        }
+        foundMethods*.method*.name == ['myData']
     }
 }
