@@ -1,9 +1,8 @@
 package contracto.matcher
 
 import contracto.model.ContractMethodMatch
-import contracto.model.HttpMethod
 import contracto.model.MatchResult
-import contracto.model.RetrofitPath
+import contracto.model.SpringRest
 import contracto.model.contract.Contract
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
@@ -46,7 +45,6 @@ class ContractMatcher {
     }
 
     private boolean isMatching(Contract contract, ContractoMethod method) {
-        return HttpMethod.of(method.method).name() == contract.request.httpMethod &&
-                RetrofitPath.from(method.method).matches(contract.request.path)
+        return SpringRest.from(method.method).matches(contract.request.path)
     }
 }

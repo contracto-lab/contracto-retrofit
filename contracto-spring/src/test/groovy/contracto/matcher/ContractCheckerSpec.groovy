@@ -1,6 +1,6 @@
 package contracto.matcher
 
-import client.data.MyData
+import client.model.MyData
 import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.model.contract.Item
 import contracto.model.contract.Type
