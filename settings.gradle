@@ -1,1 +1,5 @@
-rootProject.name = 'Contracto Retrofit'
+rootProject.name = 'Contracto JVM'
+include 'contracto-jvm-core'
+include 'contracto-retrofit'
+include 'contracto-spring'
+

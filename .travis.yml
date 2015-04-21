@@ -7,3 +7,6 @@ jdk:
 
 before_script:
   - scripts/run_http_server &
+
+script:
+  - ./gradlew :contracto-retrofit:test
