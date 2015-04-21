@@ -7,7 +7,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class Request {
 
-    HttpMethod httpMethod
+    String httpMethod
     String path
     Meta meta
 }

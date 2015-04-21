@@ -1,6 +1,6 @@
 package contracto.discovery
 
-import contracto.model.contract.HttpMethod
+import contracto.model.HttpMethod
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 

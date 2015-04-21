@@ -1,4 +1,4 @@
-package contracto.model.contract
+package contracto.model
 
 import retrofit.http.*
 
