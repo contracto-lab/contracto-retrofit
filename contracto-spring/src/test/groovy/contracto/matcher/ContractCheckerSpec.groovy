@@ -1,0 +1,51 @@
+package contracto.matcher
+
+import client.model.MyData
+import contracto.handler.DefaultContractsWithMatchHandler
+import contracto.model.contract.Item
+import contracto.model.contract.Type
+import contracto.model.reflect.ContractoClassType
+import spock.lang.Specification
+
+import static contracto.model.contract.Type.*
+
+class ContractCheckerSpec extends Specification {
+
+    def "Should return true when object match body"() {
+        expect:
+        checkClassMatchItem(new ContractoClassType(type: MyData), newObjectItem('id', string))
+    }
+
+    def "Should return false when class field has wrong name"() {
+        expect:
+        !checkClassMatchItem(new ContractoClassType(type: MyData), newObjectItem('wrongName', string))
+    }
+
+    def "Should return false when class field has wrong type"() {
+        given:
+        def wrongType = number
+        expect:
+        !checkClassMatchItem(new ContractoClassType(type: MyData), newObjectItem('id', wrongType))
+    }
+
+    def "Should return false when expected simple type"() {
+        expect:
+        !checkClassMatchItem(new ContractoClassType(type: MyData), new Item(type: string))
+    }
+
+    private static Item newObjectItem(String embeddedItemName, Type embeddedItemType) {
+        return new Item(
+                type: object,
+                embedded: [
+                        new Item(
+                                name: embeddedItemName,
+                                type: embeddedItemType,
+                        ),
+                ],
+        )
+    }
+
+    private boolean checkClassMatchItem(ContractoClassType classType, Item item) {
+        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
+    }
+}
