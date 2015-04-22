@@ -8,6 +8,7 @@ import spock.lang.Specification
 import static contracto.model.contract.Type.*
 
 class ContractCheckerSimpleClassesSpec extends Specification {
+    private DefaultContractsWithMatchHandler contractsWithMatchHandler = new DefaultContractsWithMatchHandler()
 
     def "Should recognise correct simple classes as number"() {
         expect:
@@ -52,6 +53,6 @@ class ContractCheckerSimpleClassesSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item){
-        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
+        return contractsWithMatchHandler.checkClassMatchItem(classType, item)
     }
 }

@@ -11,11 +11,12 @@ import java.lang.reflect.GenericArrayType
 import java.lang.reflect.ParameterizedType
 
 @CompileStatic
-class DefaultContractsWithMatchHandler {
+class DefaultContractsWithMatchHandler implements MatchResultHandler.ContractsWithMatchHandler {
 
     boolean failOnNotImplementedFields = true
 
-    boolean handle(List<ContractMethodMatch> matches) {
+    @Override
+    boolean handle(Collection<ContractMethodMatch> matches) {
         return matches.every { match ->
             return checkResponseBody(match) &&
                     checkRequestBody(match)

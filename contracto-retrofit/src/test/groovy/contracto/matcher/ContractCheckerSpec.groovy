@@ -10,6 +10,7 @@ import spock.lang.Specification
 import static contracto.model.contract.Type.*
 
 class ContractCheckerSpec extends Specification {
+    private DefaultContractsWithMatchHandler contractsWithMatchHandler = new DefaultContractsWithMatchHandler()
 
     def "Should return true when object match body"() {
         expect:
@@ -46,6 +47,6 @@ class ContractCheckerSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item){
-        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
+        return contractsWithMatchHandler.checkClassMatchItem(classType, item)
     }
 }

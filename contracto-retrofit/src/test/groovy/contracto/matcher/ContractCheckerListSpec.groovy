@@ -11,6 +11,7 @@ import static contracto.model.contract.Type.array
 import static contracto.model.contract.Type.number
 
 class ContractCheckerListSpec extends Specification {
+    private DefaultContractsWithMatchHandler contractsWithMatchHandler = new DefaultContractsWithMatchHandler()
 
     def "Should return true when list object match body"() {
         given:
@@ -50,6 +51,6 @@ class ContractCheckerListSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item) {
-        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
+        return contractsWithMatchHandler.checkClassMatchItem(classType, item)
     }
 }

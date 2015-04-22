@@ -11,6 +11,7 @@ import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
 class ContractMatcherSpec extends Specification {
+    private DefaultContractsWithMatchHandler contractsWithMatchHandler = new DefaultContractsWithMatchHandler()
 
     ContractMatcherFinder matcher = new ContractMatcherFinder(new RetrofitContractMatcher())
 
@@ -83,7 +84,7 @@ class ContractMatcherSpec extends Specification {
         def contracts = [ContractStub.contract()]
         when:
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
-        boolean result = new DefaultContractsWithMatchHandler().handle(matches)
+        boolean result = contractsWithMatchHandler.handle(matches)
         then:
         result
     }
