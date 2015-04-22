@@ -15,8 +15,14 @@ class SpringRest {
     }
 
     private static String path(Method method) {
-        return method.getAnnotation(RequestMapping).value()[0]
+        def elements = [method.declaringClass, method]
+
+        List<String> paths = elements.collect { it.getAnnotation(RequestMapping) }.findAll { it != null }.collect {
+            return it.value().size() > 0 ? it.value()[0] : ""
+        }
+        return paths.join("")
     }
+
 
     boolean matches(String path) {
         return this.value == path

@@ -1,22 +1,22 @@
 package contracto.matcher
 
+import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
 class ContractMatcherSpec extends Specification {
 
-//    ContractMatcherFinder matcher = new ContractMatcherFinder()
+//    ContractMatcherFinder matcher = new ContractMatcherFinder(new SpringContractMatcher())
 //
 //    def "Should find matches"() {
 //        given:
-//        def methods = findMethods([MyApi, OtherApi])
-//        def contracts = [ContractStub.contract(), ContractStub.otherContract()]
+//        def methods = findMethods([MyDataController])
+//        def contracts = [ContractStub.contract()]
 //        when:
 //        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
 //        then:
-//        matches.size() == 2
+//        matches.size() == 1
 //        matches.containsAll([
-//                new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract()),
-//                new ContractMethodMatch(method: new ContractoMethod(OtherApi.methods.first()), contract: ContractStub.otherContract()),
+//                new ContractMethodMatch(method: new ContractoMethod(MyDataController.methods.first()), contract: ContractStub.contract()),
 //        ])
 //    }
 //
@@ -80,11 +80,11 @@ class ContractMatcherSpec extends Specification {
 //        result
 //    }
 //
-//    public static List<ContractoMethod> findMethods(List<Class> apis) {
-//        apis.collectMany {
-//            it.declaredMethods.collect {
-//                new ContractoMethod(it)
-//            }
-//        }
-//    }
+    public static List<ContractoMethod> findMethods(List<Class> apis) {
+        apis.collectMany {
+            it.declaredMethods.findAll { !it.isSynthetic() } collect {
+                new ContractoMethod(it)
+            }
+        }
+    }
 }
