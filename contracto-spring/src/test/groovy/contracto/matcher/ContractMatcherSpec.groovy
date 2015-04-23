@@ -1,24 +1,31 @@
 package contracto.matcher
 
+import client.controller.MyDataController
+import client.controller.OtherController
+import contracto.model.ContractMethodMatch
+import contracto.model.ContractStub
+import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
+
+import java.lang.reflect.Method
 
 class ContractMatcherSpec extends Specification {
 
-//    ContractMatcherFinder matcher = new ContractMatcherFinder()
-//
-//    def "Should find matches"() {
-//        given:
-//        def methods = findMethods([MyApi, OtherApi])
-//        def contracts = [ContractStub.contract(), ContractStub.otherContract()]
-//        when:
-//        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
-//        then:
-//        matches.size() == 2
-//        matches.containsAll([
-//                new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract()),
-//                new ContractMethodMatch(method: new ContractoMethod(OtherApi.methods.first()), contract: ContractStub.otherContract()),
-//        ])
-//    }
+    ContractMatcherFinder matcher = new ContractMatcherFinder(new SpringContractMatcher())
+
+    def "Should find matches"() {
+        given:
+        def methods = findMethods([MyDataController, OtherController])
+        def contracts = [ContractStub.contract(), ContractStub.otherContract()]
+        when:
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        then:
+        matches.size() == 2
+        matches.containsAll([
+                new ContractMethodMatch(method: new ContractoMethod(first(MyDataController.methods)), contract: ContractStub.contract()),
+                new ContractMethodMatch(method: new ContractoMethod(first(OtherController.methods)), contract: ContractStub.otherContract())
+        ])
+    }
 //
 //    def "Should find one match based on contract"() {
 //        given:
@@ -80,11 +87,17 @@ class ContractMatcherSpec extends Specification {
 //        result
 //    }
 //
-//    public static List<ContractoMethod> findMethods(List<Class> apis) {
-//        apis.collectMany {
-//            it.declaredMethods.collect {
-//                new ContractoMethod(it)
-//            }
-//        }
-//    }
+    public static List<ContractoMethod> findMethods(List<Class> apis) {
+        apis.collectMany {
+            it.declaredMethods.findAll { !it.isSynthetic() } collect {
+                new ContractoMethod(it)
+            }
+        }
+    }
+
+    public static Method first(Method[] methods) {
+        return methods.findAll {
+            !it.isSynthetic()
+        }.first()
+    }
 }

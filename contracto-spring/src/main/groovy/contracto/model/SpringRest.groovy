@@ -15,11 +15,21 @@ class SpringRest {
     }
 
     private static String path(Method method) {
-        return method.getAnnotation(RequestMapping).value()[0]
+        def elements = [method.declaringClass, method]
+
+        Collection<RequestMapping> annotations = elements*.getAnnotation(RequestMapping).findAll()
+
+        return annotations.collect { annotation ->
+            value(annotation)
+        }.join("")
     }
 
     boolean matches(String path) {
         return this.value == path
+    }
+
+    private static String value(RequestMapping element) {
+        return element.value().size() > 0 ? element.value()[0] : ""
     }
 
 
