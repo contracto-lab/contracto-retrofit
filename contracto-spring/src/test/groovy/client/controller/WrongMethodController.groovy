@@ -2,11 +2,11 @@ package client.controller
 
 import client.model.MyData
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 
-@RequestMapping("/my/data")
-class SecondMyDataController {
+class WrongMethodController {
 
-    @RequestMapping
+    @RequestMapping(value = "/my/data", method = RequestMethod.POST)
     public MyData myData() {
         return null
     }

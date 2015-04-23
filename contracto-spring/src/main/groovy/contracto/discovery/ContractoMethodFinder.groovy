@@ -19,14 +19,8 @@ class ContractoMethodFinder {
     }
 
     private Collection<Method> extractMethods(Class controller) {
-        if (controller.getAnnotation(RequestMapping)) {
-            return controller.declaredMethods.findAll {
-                !it.isSynthetic()
-            }
-        } else {
             return controller.declaredMethods.findAll {
                 it.getAnnotation(RequestMapping) ? true : false
             }
-        }
     }
 }
