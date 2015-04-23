@@ -7,3 +7,10 @@ jdk:
 
 before_script:
   - scripts/run_http_server &
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/730568d3888e6d40e2f8
+    on_success: change
+    on_failure: always
