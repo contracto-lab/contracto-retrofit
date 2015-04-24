@@ -3,6 +3,7 @@ package contracto.model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
+import java.lang.reflect.AnnotatedElement
 import java.lang.reflect.Method
 
 class SpringRestMethod {
@@ -14,21 +15,26 @@ class SpringRestMethod {
     }
 
     private static Collection<RequestMethod> extractMethod(Method method) {
-        def classHttpMethod = method.declaringClass.getAnnotation(RequestMapping)?.method() ?: []
-        def methodHttpMethod = method.getAnnotation(RequestMapping).method() ?: [RequestMethod.GET]
+        Collection<RequestMethod> classHttpMethod = annotationMethod(method.declaringClass)
+        Collection<RequestMethod> methodHttpMethod = annotationMethod(method)
 
-        Set<RequestMethod> allHttpMethod = new HashSet<>()
-        allHttpMethod.addAll(classHttpMethod)
-        allHttpMethod.addAll(methodHttpMethod)
+        return allHttpMethods(classHttpMethod, methodHttpMethod)
+    }
 
-        return allHttpMethod
+    static Collection<RequestMethod> allHttpMethods(Collection<RequestMethod> classHttpMethod, Collection<RequestMethod> methodHttpMethod) {
+        Set<RequestMethod> methods = new HashSet<>()
+        methods.addAll(classHttpMethod)
+        methods.addAll(methodHttpMethod)
+
+        return methods.size() > 0 ? methods : [RequestMethod.GET]
+    }
+
+    private static Collection<RequestMethod> annotationMethod(AnnotatedElement element){
+        return element.getAnnotation(RequestMapping)?.method() ?: [] as Collection<RequestMethod>
     }
 
     boolean matches(String method) {
         return this.value.contains(RequestMethod.valueOf(method.toUpperCase()))
     }
 
-    private static String value(RequestMapping element) {
-        return element.method().size() > 0 ? element.value()[0] : ""
-    }
 }

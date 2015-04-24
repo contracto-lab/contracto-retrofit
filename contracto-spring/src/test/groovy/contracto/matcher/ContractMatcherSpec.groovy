@@ -3,6 +3,7 @@ package contracto.matcher
 import client.controller.CombinedController
 import client.controller.MyDataController
 import client.controller.OtherController
+import client.controller.SecWrongMethodController
 import client.controller.WrongMethodController
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
@@ -29,7 +30,7 @@ class ContractMatcherSpec extends Specification {
                 new ContractMethodMatch(method: new ContractoMethod(first(OtherController.methods)), contract: ContractStub.otherContract())
         ])
     }
-//
+
     def "Should find one match based on contract"() {
         given:
         def methods = findMethods([MyDataController, OtherController])
@@ -95,6 +96,16 @@ class ContractMatcherSpec extends Specification {
     def "Should not find matches when controller defines wrong http method"() {
         given:
         def methods = findMethods([WrongMethodController])
+        def contracts = [ContractStub.contract()]
+        when:
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        then:
+        matches.size() == 0
+    }
+
+    def "Should not match using default method when other annotation defines http method"() {
+        given:
+        def methods = findMethods([SecWrongMethodController])
         def contracts = [ContractStub.contract()]
         when:
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)

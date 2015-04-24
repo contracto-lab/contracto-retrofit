@@ -3,6 +3,7 @@ package contracto.model
 import groovy.transform.CompileStatic
 import org.springframework.web.bind.annotation.RequestMapping
 
+import java.lang.reflect.AnnotatedElement
 import java.lang.reflect.Method
 
 @CompileStatic
@@ -15,16 +16,26 @@ class SpringRestPath {
     }
 
     private static Collection<String> path(Method method) {
-        def classPath = method.declaringClass.getAnnotation(RequestMapping)?.value() ?: []
-        def methodPath = method.getAnnotation(RequestMapping).value()
+        Collection<String> classPath = annotationValue(method.declaringClass)
+        Collection<String> methodPath = annotationValue(method)
+
+        return combinePaths(classPath, methodPath)
+    }
+
+    private static Collection<String> combinePaths(Collection<String> classPath, Collection<String> methodPath) {
+        if( classPath.size() == 0){
+            return methodPath
+        }
+        if( methodPath.size() == 0){
+            return classPath
+        }
 
         Collection<Collection<String>> permutation = [classPath, methodPath].combinations()
+        return permutation*.join('')
+    }
 
-        if (permutation.size() > 0) {
-            return permutation*.join('')
-        } else {
-            return [classPath, methodPath].flatten() as Collection<String>
-        }
+    private static Collection<String> annotationValue(AnnotatedElement element){
+        return element.getAnnotation(RequestMapping)?.value() as Collection<String> ?: []
     }
 
     boolean matches(String path) {
