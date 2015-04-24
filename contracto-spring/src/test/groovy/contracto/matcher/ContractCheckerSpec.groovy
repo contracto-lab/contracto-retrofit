@@ -1,7 +1,7 @@
 package contracto.matcher
 
 import client.model.MyData
-import contracto.handler.DefaultContractsWithMatchHandler
+import contracto.handler.SpringContractsWithMatchHandler
 import contracto.model.contract.Item
 import contracto.model.contract.Type
 import contracto.model.reflect.ContractoClassType
@@ -46,6 +46,6 @@ class ContractCheckerSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item) {
-        return new DefaultContractsWithMatchHandler().checkClassMatchItem(classType, item)
+        return new SpringContractsWithMatchHandler().checkClassMatchItem(classType, item)
     }
 }

@@ -3,6 +3,7 @@ package contracto
 import contracto.api.ContractoService
 import contracto.discovery.ContractoMethodFinder
 import contracto.handler.MatchResultHandler
+import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.matcher.ContractMatcherFinder
 import contracto.matcher.RetrofitContractMatcher
 import contracto.model.MatchResult
@@ -15,7 +16,7 @@ class Contracto {
     private ContractoService service = new ContractoService()
     private ContractoMethodFinder methodExtractor = new ContractoMethodFinder()
     private ContractMatcherFinder matcher = new ContractMatcherFinder(new RetrofitContractMatcher())
-    private MatchResultHandler matchesHandler = new MatchResultHandler()
+    private MatchResultHandler matchesHandler = new MatchResultHandler(new RetrofitContractsWithMatchHandler())
 
     boolean checkContracts(List<Class> apis, List<String> urls) {
         List<Contract> contracts = service.downloadContracts(urls)

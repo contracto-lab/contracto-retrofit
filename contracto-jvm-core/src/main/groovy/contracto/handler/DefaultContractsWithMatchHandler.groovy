@@ -4,14 +4,13 @@ import contracto.model.ContractMethodMatch
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
-import retrofit.http.Body
 
 import java.lang.annotation.Annotation
 import java.lang.reflect.GenericArrayType
 import java.lang.reflect.ParameterizedType
 
 @CompileStatic
-class DefaultContractsWithMatchHandler {
+abstract class DefaultContractsWithMatchHandler {
 
     boolean failOnNotImplementedFields = true
 
@@ -22,13 +21,13 @@ class DefaultContractsWithMatchHandler {
         }
     }
 
-    private boolean checkResponseBody(ContractMethodMatch match) {
+    boolean checkResponseBody(ContractMethodMatch match) {
         ContractoClassType returnType = match.method.returnType
         Item responseBody = match.contract.request.meta.response.body
         return checkClassMatchItem(returnType, responseBody)
     }
 
-    private boolean checkRequestBody(ContractMethodMatch it) {
+    boolean checkRequestBody(ContractMethodMatch it) {
         Item requestBody = it.contract.request.meta.request.body
         int withBodyIndex = it.method.method.parameterAnnotations.findIndexOf(this.&withBody)
         if (requestBody == null && withBodyIndex == -1) {
@@ -41,9 +40,7 @@ class DefaultContractsWithMatchHandler {
         return checkClassMatchItem(type, requestBody)
     }
 
-    private boolean withBody(Annotation[] annotations) {
-        return annotations*.annotationType().contains(Body)
-    }
+    abstract protected boolean withBody(Annotation[] annotations)
 
     boolean checkClassMatchItem(ContractoClassType classType, Item item) {
         if (item.type.simple) {
@@ -63,9 +60,11 @@ class DefaultContractsWithMatchHandler {
                 return false
         }
         return existingFields(classType, item).every {
-            checkClassMatchItem(classType.findDeclaredField(it.name, new ToClassImpl()), it)
+            checkClassMatchItem(classType.findDeclaredField(it.name, classTypeResolver), it)
         }
     }
+
+    abstract protected ContractoClassType.ToClass getClassTypeResolver()
 
     private List<Item> existingFields(ContractoClassType classType, Item item) {
         return item.embedded.findAll { existsInClass(classType, it) }
@@ -76,7 +75,7 @@ class DefaultContractsWithMatchHandler {
     }
 
     private boolean existsInClass(ContractoClassType classType, Item item) {
-        return classType.findDeclaredField(item.name, new ToClassImpl()) != null
+        return classType.findDeclaredField(item.name, classTypeResolver) != null
     }
 
     private boolean checkSimpleTypeMatch(ContractoClassType classType, Item item) {

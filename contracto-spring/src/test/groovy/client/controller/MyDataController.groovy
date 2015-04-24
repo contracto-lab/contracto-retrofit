@@ -11,7 +11,7 @@ class MyDataController {
 
     @RequestMapping("/my/data")
     public MyData myData() {
-        return null
+        null
     }
 
 }

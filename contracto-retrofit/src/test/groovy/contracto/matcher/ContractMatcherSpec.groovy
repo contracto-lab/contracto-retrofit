@@ -3,7 +3,7 @@ package contracto.matcher
 import client.api.MyApi
 import client.api.MyObservableApi
 import client.api.OtherApi
-import contracto.handler.DefaultContractsWithMatchHandler
+import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.Contract
@@ -83,7 +83,7 @@ class ContractMatcherSpec extends Specification {
         def contracts = [ContractStub.contract()]
         when:
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
-        boolean result = new DefaultContractsWithMatchHandler().handle(matches)
+        boolean result = new RetrofitContractsWithMatchHandler().handle(matches)
         then:
         result
     }

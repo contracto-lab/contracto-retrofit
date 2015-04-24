@@ -1,7 +1,7 @@
 package contracto.matcher
 
 import client.data.MyData
-import contracto.handler.DefaultContractsWithMatchHandler
+import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.*
@@ -24,7 +24,7 @@ class ContractCheckerBodySpec extends Specification {
         def contract = aContract(ContractStub.body())
         def match = new ContractMethodMatch(method: method, contract: contract)
         expect:
-        new DefaultContractsWithMatchHandler().checkRequestBody(match)
+        new RetrofitContractsWithMatchHandler().checkRequestBody(match)
     }
 
     def "Should accept match when body match parameter type even when it is an array"() {
@@ -33,7 +33,7 @@ class ContractCheckerBodySpec extends Specification {
         def contract = aContract(ContractStub.stringArray())
         def match = new ContractMethodMatch(method: method, contract: contract)
         expect:
-        new DefaultContractsWithMatchHandler().checkRequestBody(match)
+        new RetrofitContractsWithMatchHandler().checkRequestBody(match)
     }
 
     private Contract aContract(Item body) {
