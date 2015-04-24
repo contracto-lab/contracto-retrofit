@@ -21,13 +21,13 @@ abstract class DefaultContractsWithMatchHandler {
         }
     }
 
-    boolean checkResponseBody(ContractMethodMatch match) {
+    protected boolean checkResponseBody(ContractMethodMatch match) {
         ContractoClassType returnType = match.method.returnType
         Item responseBody = match.contract.request.meta.response.body
         return checkClassMatchItem(returnType, responseBody)
     }
 
-    boolean checkRequestBody(ContractMethodMatch it) {
+    protected boolean checkRequestBody(ContractMethodMatch it) {
         Item requestBody = it.contract.request.meta.request.body
         int withBodyIndex = it.method.method.parameterAnnotations.findIndexOf(this.&withBody)
         if (requestBody == null && withBodyIndex == -1) {
