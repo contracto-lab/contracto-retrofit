@@ -3,8 +3,10 @@ package contracto.matcher
 import client.controller.CombinedController
 import client.controller.MyDataController
 import client.controller.OtherController
+import client.controller.ResponseEntityController
 import client.controller.SecWrongMethodController
 import client.controller.WrongMethodController
+import contracto.handler.SpringContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.Contract
@@ -111,6 +113,17 @@ class ContractMatcherSpec extends Specification {
         List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
         then:
         matches.size() == 0
+    }
+
+    def "Should find match for both ResponseEntity wrapped object and object"() {
+        given:
+        def methods = findMethods([MyDataController, ResponseEntityController])
+        def contracts = [ContractStub.contract()]
+        when:
+        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        boolean result = new SpringContractsWithMatchHandler().handle(matches)
+        then:
+        result
     }
 
     public static List<ContractoMethod> findMethods(List<Class> apis) {
