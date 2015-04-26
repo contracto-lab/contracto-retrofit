@@ -10,6 +10,7 @@ import java.lang.reflect.Method
 class Contract {
 
     Schema schema
+    List<Example> examples
 
     String getRequestMethod() {
         schema.request.method

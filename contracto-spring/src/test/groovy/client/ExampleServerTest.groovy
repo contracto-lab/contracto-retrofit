@@ -13,9 +13,9 @@ class ExampleServerTest extends Specification {
         given:
         def controllers = [MyDataController, SecondMyDataController, OtherController, PostController, ResponseEntityController]
         def urls = [
-                "http://localhost:13579/contracts/my_data.con.json",
-                "http://localhost:13579/contracts/other_data.con.json",
-                "http://localhost:13579/contracts/post_my_data.con.json"
+                "http://localhost:13579/contracts/my_data.contract.json",
+                "http://localhost:13579/contracts/other_data.contract.json",
+                "http://localhost:13579/contracts/post_my_data.contract.json"
         ]
         expect:
         new Contracto().checkContracts(controllers, urls)

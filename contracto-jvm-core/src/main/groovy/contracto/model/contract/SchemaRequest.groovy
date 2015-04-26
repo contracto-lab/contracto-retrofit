@@ -9,8 +9,7 @@ class SchemaRequest {
 
     String path
     String method
-    List<Item> pathParams
-    List<Item> queryParams
     List<Item> headers
+    List<Item> params
     Item body
 }
