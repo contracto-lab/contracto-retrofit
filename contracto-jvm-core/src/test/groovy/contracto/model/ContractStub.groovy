@@ -3,9 +3,9 @@ package contracto.model
 import contracto.model.contract.*
 import groovy.transform.CompileStatic
 
-import static contracto.model.contract.Type.array
-import static contracto.model.contract.Type.object
-import static contracto.model.contract.Type.string
+import static JsonType.array
+import static JsonType.object
+import static JsonType.string
 
 @CompileStatic
 class ContractStub {

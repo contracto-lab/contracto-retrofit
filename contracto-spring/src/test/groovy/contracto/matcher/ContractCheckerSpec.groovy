@@ -3,11 +3,11 @@ package contracto.matcher
 import client.model.MyData
 import contracto.handler.SpringContractsWithMatchHandler
 import contracto.model.contract.Item
-import contracto.model.contract.Type
+import contracto.model.contract.JsonType
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
 
-import static contracto.model.contract.Type.*
+import static JsonType.*
 
 class ContractCheckerSpec extends Specification {
 
@@ -33,7 +33,7 @@ class ContractCheckerSpec extends Specification {
         !checkClassMatchItem(new ContractoClassType(type: MyData), new Item(type: string))
     }
 
-    private static Item newObjectItem(String embeddedItemName, Type embeddedItemType) {
+    private static Item newObjectItem(String embeddedItemName, JsonType embeddedItemType) {
         return new Item(
                 type: object,
                 embedded: [

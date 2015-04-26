@@ -5,7 +5,7 @@ import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
 
-import static contracto.model.contract.Type.*
+import static contracto.model.contract.JsonType.*
 
 class ContractCheckerSimpleClassesSpec extends Specification {
 

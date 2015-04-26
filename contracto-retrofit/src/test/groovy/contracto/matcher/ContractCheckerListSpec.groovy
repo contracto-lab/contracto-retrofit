@@ -7,8 +7,8 @@ import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
 
-import static contracto.model.contract.Type.array
-import static contracto.model.contract.Type.number
+import static contracto.model.contract.JsonType.array
+import static contracto.model.contract.JsonType.number
 
 class ContractCheckerListSpec extends Specification {
 

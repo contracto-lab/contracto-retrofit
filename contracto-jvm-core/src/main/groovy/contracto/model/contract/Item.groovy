@@ -8,7 +8,7 @@ import groovy.transform.CompileStatic
 class Item {
 
     String name
-    Type type
+    JsonType type
     boolean optional
     List<Item> embedded
 }

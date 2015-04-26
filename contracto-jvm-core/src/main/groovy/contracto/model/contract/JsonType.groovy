@@ -1,6 +1,6 @@
 package contracto.model.contract
 
-enum Type {
+enum JsonType {
 
     object([]),
     string([String]),
@@ -10,7 +10,7 @@ enum Type {
 
     final List<Class> possibleClasses
 
-    Type(List<Class> possibleClasses) {
+    JsonType(List<Class> possibleClasses) {
         this.possibleClasses = possibleClasses
     }
 
