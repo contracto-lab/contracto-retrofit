@@ -11,7 +11,4 @@ class Contract {
 
     Request request
 
-    void displayWarning() {
-        System.err.println("Warning no matching for: \n$this")
-    }
 }

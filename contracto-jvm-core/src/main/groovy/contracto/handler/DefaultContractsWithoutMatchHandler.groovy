@@ -8,7 +8,9 @@ class DefaultContractsWithoutMatchHandler {
     boolean failOnContractsWithoutMatch = false;
 
     boolean handle(List<Contract> contracts) {
-        contracts*.displayWarning()
+        contracts.each{
+            System.err.println("Warning no matching for: \n$it")
+        }
         return contracts.isEmpty() ? true : !failOnContractsWithoutMatch;
     }
 }
