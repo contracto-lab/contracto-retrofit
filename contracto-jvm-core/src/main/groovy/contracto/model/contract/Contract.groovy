@@ -10,5 +10,21 @@ import java.lang.reflect.Method
 class Contract {
 
     Request request
+    Schema schema
 
+    String getRequestMethod() {
+        request.httpMethod
+    }
+
+    String getRequestPath() {
+        request.path
+    }
+
+    Item getResponseBody() {
+        request.schema.response.body
+    }
+
+    Item getRequestBody() {
+        request.schema.request.body
+    }
 }

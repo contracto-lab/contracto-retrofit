@@ -2,7 +2,7 @@
   "request": {
     "http_method": "post",
     "path": "/my/data",
-    "meta": {
+    "schema": {
       "request": {
         "body": {
           "type": "object",

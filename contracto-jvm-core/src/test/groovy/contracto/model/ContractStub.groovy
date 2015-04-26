@@ -15,11 +15,17 @@ class ContractStub {
                 request: new Request(
                         httpMethod: 'get',
                         path: "/my/data",
-                        meta: new Meta(
-                                request: new MetaRequest(),
-                                response: new MetaResponse(
+                        schema: new Schema(
+                                request: new SchemaRequest(),
+                                response: new SchemaResponse(
                                         body: body(),
                                 ),
+                        ),
+                ),
+                schema: new Schema(
+                        request: new SchemaRequest(),
+                        response: new SchemaResponse(
+                                body: body(),
                         ),
                 ),
         )
@@ -42,11 +48,17 @@ class ContractStub {
                 request: new Request(
                         httpMethod: 'get',
                         path: "/other/data",
-                        meta: new Meta(
-                                request: new MetaRequest(),
-                                response: new MetaResponse(
+                        schema: new Schema(
+                                request: new SchemaRequest(),
+                                response: new SchemaResponse(
                                         body: otherBody(),
                                 ),
+                        ),
+                ),
+                schema: new Schema(
+                        request: new SchemaRequest(),
+                        response: new SchemaResponse(
+                                body: otherBody(),
                         ),
                 ),
         )

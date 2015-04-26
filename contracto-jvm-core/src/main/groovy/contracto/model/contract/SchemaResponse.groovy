@@ -5,10 +5,8 @@ import groovy.transform.CompileStatic
 
 @Canonical
 @CompileStatic
-class MetaRequest {
+class SchemaResponse {
 
-    List<Item> pathParams
-    List<Item> queryParams
     List<Item> headers
     Item body
 }

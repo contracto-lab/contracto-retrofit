@@ -11,7 +11,7 @@ class RetrofitContractMatcher implements ContractMatcherFinder.ContractMatcher {
 
     @Override
     boolean isMatching(Contract contract, ContractoMethod method) {
-        return HttpMethod.of(method.method).name() == contract.request.httpMethod &&
-                RetrofitPath.from(method.method).matches(contract.request.path)
+        return HttpMethod.of(method.method).name() == contract.getRequestMethod() &&
+                RetrofitPath.from(method.method).matches(contract.getRequestPath())
     }
 }

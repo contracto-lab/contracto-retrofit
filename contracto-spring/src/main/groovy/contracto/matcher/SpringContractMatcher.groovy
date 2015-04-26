@@ -11,7 +11,7 @@ class SpringContractMatcher implements ContractMatcherFinder.ContractMatcher {
 
     @Override
     boolean isMatching(Contract contract, ContractoMethod method) {
-        return SpringRestMethod.from(method.method).matches(contract.request.httpMethod) &&
-                SpringRestPath.from(method.method).matches(contract.request.path)
+        return SpringRestMethod.from(method.method).matches(contract.requestMethod) &&
+                SpringRestPath.from(method.method).matches(contract.requestPath)
     }
 }

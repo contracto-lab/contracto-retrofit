@@ -9,5 +9,5 @@ class Request {
 
     String httpMethod
     String path
-    Meta meta
+    Schema schema
 }

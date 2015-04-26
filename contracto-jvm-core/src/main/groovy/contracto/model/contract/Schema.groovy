@@ -5,8 +5,8 @@ import groovy.transform.CompileStatic
 
 @Canonical
 @CompileStatic
-class Meta {
+class Schema {
 
-    MetaRequest request
-    MetaResponse response
+    SchemaRequest request
+    SchemaResponse response
 }

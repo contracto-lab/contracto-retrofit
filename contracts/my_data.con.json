@@ -1,8 +1,24 @@
 {
+  "schema": {
+    "request": {
+
+    },
+    "response": {
+      "body": {
+        "type": "object",
+        "embedded": [
+          {
+            "name": "id",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
   "request": {
     "http_method": "get",
     "path": "/my/data",
-    "meta": {
+    "schema": {
       "request": {
 
       },
