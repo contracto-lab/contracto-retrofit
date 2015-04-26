@@ -12,18 +12,11 @@ class ContractStub {
 
     static Contract contract() {
         return new Contract(
-                request: new Request(
-                        httpMethod: 'get',
-                        path: "/my/data",
-                        schema: new Schema(
-                                request: new SchemaRequest(),
-                                response: new SchemaResponse(
-                                        body: body(),
-                                ),
-                        ),
-                ),
                 schema: new Schema(
-                        request: new SchemaRequest(),
+                        request: new SchemaRequest(
+                                method: 'get',
+                                path: "/my/data",
+                        ),
                         response: new SchemaResponse(
                                 body: body(),
                         ),
@@ -45,18 +38,11 @@ class ContractStub {
 
     static Contract otherContract() {
         return new Contract(
-                request: new Request(
-                        httpMethod: 'get',
-                        path: "/other/data",
-                        schema: new Schema(
-                                request: new SchemaRequest(),
-                                response: new SchemaResponse(
-                                        body: otherBody(),
-                                ),
-                        ),
-                ),
                 schema: new Schema(
-                        request: new SchemaRequest(),
+                        request: new SchemaRequest(
+                                method: 'get',
+                                path: "/other/data",
+                        ),
                         response: new SchemaResponse(
                                 body: otherBody(),
                         ),

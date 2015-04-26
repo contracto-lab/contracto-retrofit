@@ -9,22 +9,21 @@ import java.lang.reflect.Method
 @CompileStatic
 class Contract {
 
-    Request request
     Schema schema
 
     String getRequestMethod() {
-        request.httpMethod
+        schema.request.method
     }
 
     String getRequestPath() {
-        request.path
+        schema.request.path
     }
 
     Item getResponseBody() {
-        request.schema.response.body
+        schema.response.body
     }
 
     Item getRequestBody() {
-        request.schema.request.body
+        schema.request.body
     }
 }

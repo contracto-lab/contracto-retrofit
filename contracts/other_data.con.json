@@ -1,7 +1,8 @@
 {
   "schema": {
     "request": {
-
+      "path": "/other/data",
+      "method": "get"
     },
     "response": {
       "body": {
@@ -16,30 +17,6 @@
             "type": "string"
           }
         ]
-      }
-    }
-  },
-  "request": {
-    "http_method": "get",
-    "path": "/other/data",
-    "schema": {
-      "request": {
-
-      },
-      "response": {
-        "body": {
-          "type": "object",
-          "embedded": [
-            {
-              "name": "name",
-              "type": "string"
-            },
-            {
-              "name": "surname",
-              "type": "string"
-            }
-          ]
-        }
       }
     }
   },

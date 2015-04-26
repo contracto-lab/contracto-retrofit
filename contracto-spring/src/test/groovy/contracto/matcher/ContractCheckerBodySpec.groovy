@@ -39,13 +39,6 @@ class ContractCheckerBodySpec extends Specification {
 
     private Contract aContract(Item body) {
         return new Contract(
-                request: new Request(
-                        schema: new Schema(
-                                request: new SchemaRequest(
-                                        body: body
-                                )
-                        )
-                ),
                 schema: new Schema(
                         request: new SchemaRequest(
                                 body: body

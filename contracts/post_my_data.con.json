@@ -1,29 +1,27 @@
 {
-  "request": {
-    "http_method": "post",
-    "path": "/my/data",
-    "schema": {
-      "request": {
-        "body": {
-          "type": "object",
-          "embedded": [
-            {
-              "name": "id",
-              "type": "string"
-            }
-          ]
-        }
-      },
-      "response": {
-        "body": {
-          "type": "object",
-          "embedded": [
-            {
-              "name": "id",
-              "type": "string"
-            }
-          ]
-        }
+  "schema": {
+    "request": {
+      "path": "/my/data",
+      "method": "post",
+      "body": {
+        "type": "object",
+        "embedded": [
+          {
+            "name": "id",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "response": {
+      "body": {
+        "type": "object",
+        "embedded": [
+          {
+            "name": "id",
+            "type": "string"
+          }
+        ]
       }
     }
   },
