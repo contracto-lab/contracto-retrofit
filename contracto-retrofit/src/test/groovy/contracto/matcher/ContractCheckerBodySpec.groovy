@@ -11,11 +11,13 @@ import spock.lang.Specification
 
 class ContractCheckerBodySpec extends Specification {
 
-    void justMethod(@Body MyData myData){
+    MyData justMethod(@Body MyData myData){
         //It is just a method. Only parameter is important here.
+        return null;
     }
-    void justMethodWithStringList(@Body List<String> myData){
+    List<String> justMethodWithStringList(@Body List<String> myData){
         //It is just a method. Only parameter is important here.
+        return null;
     }
 
     def "Should accept match when body match parameter type"() {
@@ -24,7 +26,7 @@ class ContractCheckerBodySpec extends Specification {
         def contract = aContract(ContractStub.body())
         def match = new ContractMethodMatch(method: method, contract: contract)
         expect:
-        new RetrofitContractsWithMatchHandler().checkRequestBody(match)
+        new RetrofitContractsWithMatchHandler().handle([match])
     }
 
     def "Should accept match when body match parameter type even when it is an array"() {
@@ -33,13 +35,16 @@ class ContractCheckerBodySpec extends Specification {
         def contract = aContract(ContractStub.stringArray())
         def match = new ContractMethodMatch(method: method, contract: contract)
         expect:
-        new RetrofitContractsWithMatchHandler().checkRequestBody(match)
+        new RetrofitContractsWithMatchHandler().handle([match])
     }
 
     private Contract aContract(Item body) {
         return new Contract(
                 schema: new Schema(
                         request: new SchemaRequest(
+                                body: body
+                        ),
+                        response: new SchemaResponse(
                                 body: body
                         )
                 )

@@ -12,19 +12,15 @@ import java.lang.reflect.Type
 class ContractoClassType {
 
     static ContractoClassType fromMethod(Method method) {
-        return fromClass(method.genericReturnType)
+        return new ContractoClassType(type: method.genericReturnType)
     }
 
     static ContractoClassType fromField(Field field) {
-        return fromClass(field.genericType)
+        return new ContractoClassType(type: field.genericType)
     }
 
     static ContractoClassType fromParameter(Method method, int parameterIndex) {
-        return fromClass(method.genericParameterTypes[parameterIndex])
-    }
-
-    private static ContractoClassType fromClass(Type type) {
-        return new ContractoClassType(type: type)
+        return new ContractoClassType(type: method.genericParameterTypes[parameterIndex])
     }
 
     Type type
