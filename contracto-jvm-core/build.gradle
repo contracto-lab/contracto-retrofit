@@ -4,6 +4,10 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    targetCompatibility = 1.6
+}
+
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile 'com.squareup.retrofit:retrofit:1.9.0'

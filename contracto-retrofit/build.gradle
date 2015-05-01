@@ -10,6 +10,10 @@ test {
     dependsOn(':contracto-jvm-core:test')
 }
 
+jar {
+    targetCompatibility = 1.6
+}
+
 dependencies {
     compile project(':contracto-jvm-core')
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
