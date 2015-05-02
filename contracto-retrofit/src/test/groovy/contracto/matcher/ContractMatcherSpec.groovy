@@ -19,7 +19,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches.size() == 2
         matches.containsAll([
@@ -33,7 +33,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches == [new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract())]
     }
@@ -43,7 +43,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches == [new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract())]
     }
@@ -53,7 +53,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, OtherApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
+        List<Contract> unmatched = matcher.calculateMatchResult(methods, contracts).unmatchedContracts
         then:
         unmatched.isEmpty()
     }
@@ -63,7 +63,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
+        List<Contract> unmatched = matcher.calculateMatchResult(methods, contracts).unmatchedContracts
         then:
         unmatched == [ContractStub.otherContract()]
     }
@@ -72,7 +72,7 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyApi])
         when:
-        List<ContractoMethod> unmatched = matcher.findMethodsWithoutMatch(methods, [])
+        List<ContractoMethod> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
         then:
         unmatched == [new ContractoMethod(MyApi.getDeclaredMethod("getMyData"))]
     }
@@ -82,7 +82,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyApi, MyObservableApi])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         boolean result = new RetrofitContractsWithMatchHandler().handle(matches)
         then:
         result

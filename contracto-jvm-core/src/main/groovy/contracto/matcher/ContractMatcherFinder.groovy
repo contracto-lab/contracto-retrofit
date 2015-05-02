@@ -17,38 +17,41 @@ class ContractMatcherFinder {
         this.contractMatcher = contractMatcher
     }
 
-    List<ContractMethodMatch> findMatching(List<ContractoMethod> methods, List<Contract> contracts) {
+    MatchResult calculateMatchResult(List<ContractoMethod> contractoMethods, List<Contract> contracts) {
+        List<Method> methods = contractoMethods.collect { it.method }
+        return new MatchResult(
+                matches: findMatching(methods, contracts),
+                unmatchedContracts: findContractsWithoutMatch(methods, contracts),
+                unmatchedMethods: findMethodsWithoutMatch(methods, contracts)
+        )
+    }
+
+    private List<ContractMethodMatch> findMatching(List<Method> methods, List<Contract> contracts) {
         return methods.collectMany { method ->
             contracts.findAll { contract ->
-                contractMatcher.isMatching(contract, method.method)
+                contractMatcher.isMatching(contract, method)
             }.collect { contract ->
-                new ContractMethodMatch(method: method, contract: contract)
+                new ContractMethodMatch(method: new ContractoMethod(method), contract: contract)
             }
         }
     }
 
-    List<Contract> findContractsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
+    private List<Contract> findContractsWithoutMatch(List<Method> methods, List<Contract> contracts) {
         return contracts.findAll { contract ->
             !methods.any { method ->
-                contractMatcher.isMatching(contract, method.method)
+                contractMatcher.isMatching(contract, method)
             }
         }
     }
 
-    List<ContractoMethod> findMethodsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
+    private List<ContractoMethod> findMethodsWithoutMatch(List<Method> methods, List<Contract> contracts) {
         return methods.findAll { method ->
             !contracts.any { contract ->
-                contractMatcher.isMatching(contract, method.method)
+                contractMatcher.isMatching(contract, method)
             }
+        }.collect{
+            new ContractoMethod(it)
         }
-    }
-
-    MatchResult calculateMatchResult(List<ContractoMethod> contractoMethods, List<Contract> contracts) {
-        return new MatchResult(
-                matches: findMatching(contractoMethods, contracts),
-                unmatchedContracts: findContractsWithoutMatch(contractoMethods, contracts),
-                unmatchedMethods: findMethodsWithoutMatch(contractoMethods, contracts)
-        )
     }
 
     interface ContractMatcher{

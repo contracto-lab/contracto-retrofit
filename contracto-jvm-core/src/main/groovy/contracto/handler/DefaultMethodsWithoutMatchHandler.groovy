@@ -1,6 +1,5 @@
 package contracto.handler
 
-import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
 import java.lang.reflect.Method

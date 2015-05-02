@@ -24,7 +24,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyDataController, OtherController])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches.size() == 2
         matches.containsAll([
@@ -38,7 +38,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyDataController, OtherController])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches == [new ContractMethodMatch(method: new ContractoMethod(first(MyDataController.methods)), contract: ContractStub.contract())]
     }
@@ -48,7 +48,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyDataController])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches == [new ContractMethodMatch(method: new ContractoMethod(first(MyDataController.methods)), contract: ContractStub.contract())]
     }
@@ -58,7 +58,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyDataController, OtherController])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
+        List<Contract> unmatched = matcher.calculateMatchResult(methods, contracts).unmatchedContracts
         then:
         unmatched.isEmpty()
     }
@@ -68,7 +68,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyDataController])
         def contracts = [ContractStub.contract(), ContractStub.otherContract()]
         when:
-        List<Contract> unmatched = matcher.findContractsWithoutMatch(methods, contracts)
+        List<Contract> unmatched = matcher.calculateMatchResult(methods, contracts).unmatchedContracts
         then:
         unmatched == [ContractStub.otherContract()]
     }
@@ -77,7 +77,7 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyDataController])
         when:
-        List<ContractoMethod> unmatched = matcher.findMethodsWithoutMatch(methods, [])
+        List<ContractoMethod> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
         then:
         unmatched == [new ContractoMethod(MyDataController.getDeclaredMethod("myData"))]
     }
@@ -87,7 +87,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([CombinedController])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches.size() == 1
         matches.containsAll([
@@ -100,7 +100,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([WrongMethodController])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches.size() == 0
     }
@@ -110,7 +110,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([SecWrongMethodController])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
         matches.size() == 0
     }
@@ -120,7 +120,7 @@ class ContractMatcherSpec extends Specification {
         def methods = findMethods([MyDataController, ResponseEntityController])
         def contracts = [ContractStub.contract()]
         when:
-        List<ContractMethodMatch> matches = matcher.findMatching(methods, contracts)
+        List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         boolean result = new SpringContractsWithMatchHandler().handle(matches)
         then:
         result
