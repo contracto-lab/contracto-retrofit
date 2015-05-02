@@ -24,8 +24,8 @@ class Contracto {
 
     boolean checkContracts(List<Class> apis, List<String> urls) {
         List<Contract> contracts = service.downloadContracts(urls)
-        List<ContractoMethod> retrofitMethods = methodExtractor.findMethods(apis)
-        MatchResult matchResult = matcher.calculateMatchResult(retrofitMethods.collect { it.method }, contracts)
+        List<Method> retrofitMethods = methodExtractor.findMethods(apis)
+        MatchResult matchResult = matcher.calculateMatchResult(retrofitMethods, contracts)
         return matchesHandler.isSuccessfullyMatched(matchResult)
     }
 

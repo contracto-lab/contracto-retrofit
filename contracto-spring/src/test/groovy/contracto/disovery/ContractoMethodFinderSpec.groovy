@@ -17,7 +17,7 @@ class ContractoMethodFinderSpec extends Specification {
 
         then:
         foundMethods.size() > 0
-        foundMethods*.method*.name == ['myData']
+        foundMethods*.name == ['myData']
     }
 
 }

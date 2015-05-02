@@ -1,6 +1,5 @@
 package contracto.discovery
 
-import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 import groovy.transform.TupleConstructor
 
@@ -12,10 +11,9 @@ class ContractoMethodFinder {
 
     final AnnotatedMethodsFinder annotatedMethodsFinder
 
-    List<ContractoMethod> findMethods(List<Class> classes) {
+    List<Method> findMethods(List<Class> classes) {
         classes.collectMany(this.&allMethods)
                 .findAll(this.&annotated)
-                .collect(this.&wrap)
     }
 
     private List<Method> allMethods(Class aClass) {
@@ -24,10 +22,6 @@ class ContractoMethodFinder {
 
     private boolean annotated(Method method) {
         return annotatedMethodsFinder.isAnnotated(method)
-    }
-
-    private ContractoMethod wrap(Method method) {
-        return new ContractoMethod(method)
     }
 
     static interface AnnotatedMethodsFinder{

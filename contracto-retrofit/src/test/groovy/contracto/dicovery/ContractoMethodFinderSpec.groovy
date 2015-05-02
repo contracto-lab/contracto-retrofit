@@ -14,6 +14,6 @@ class ContractoMethodFinderSpec extends Specification {
         when:
         def methods = new ContractoMethodFinder(new RetrofitAnnotatedMethodsFinder()).findMethods(apis)
         then:
-        methods*.method == [BadApi.getDeclaredMethod("sendMyData", MyData)]
+        methods == [BadApi.getDeclaredMethod("sendMyData", MyData)]
     }
 }
