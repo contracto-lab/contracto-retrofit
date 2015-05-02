@@ -2,6 +2,7 @@ package contracto.model.reflect
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.annotations.SerializedName
+import groovy.transform.Canonical
 import groovy.transform.CompileStatic
 
 import java.lang.reflect.Field
@@ -9,6 +10,7 @@ import java.lang.reflect.Method
 import java.lang.reflect.Type
 
 @CompileStatic
+@Canonical
 class ContractoClassType {
 
     static ContractoClassType fromMethod(Method method) {

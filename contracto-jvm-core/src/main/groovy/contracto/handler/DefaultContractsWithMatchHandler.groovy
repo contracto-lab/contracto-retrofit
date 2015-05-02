@@ -2,6 +2,7 @@ package contracto.handler
 
 import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.ContractMethodMatch
+import contracto.model.MatchError
 import groovy.transform.CompileStatic
 
 @CompileStatic
@@ -15,12 +16,12 @@ abstract class DefaultContractsWithMatchHandler {
     }
 
     private boolean isMatching(ContractMethodMatch match) {
-        return matchers.every {
+        return matchers.collectMany {
             it.isMatching(match, classItemMatcher)
-        }
+        }.empty
     }
 
     static interface Matcher {
-        boolean isMatching(ContractMethodMatch contractMethodMatch, ClassItemMatcher classItemMatcher)
+        Collection<MatchError> isMatching(ContractMethodMatch contractMethodMatch, ClassItemMatcher classItemMatcher)
     }
 }
