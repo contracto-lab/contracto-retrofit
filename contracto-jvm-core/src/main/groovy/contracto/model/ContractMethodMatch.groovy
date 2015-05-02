@@ -14,10 +14,6 @@ class ContractMethodMatch {
     Method method
     Contract contract
 
-    Method getRegularMethod() {
-        return method
-    }
-
     Item getContractResponseBody() {
         contract.responseBody
     }

@@ -7,7 +7,7 @@ import java.lang.reflect.Method
 
 @CompileStatic
 class MatchResult {
-    List<ContractMethodMatch> matches
-    List<Contract> unmatchedContracts
-    List<Method> unmatchedMethods
+    List<ContractMethodMatch> matches = []
+    List<Contract> unmatchedContracts = []
+    List<Method> unmatchedMethods = []
 }
