@@ -10,9 +10,9 @@ import groovy.transform.CompileStatic
 class ResponseBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
 
     @Override
-    boolean isMatching(ContractMethodMatch match, DefaultContractsWithMatchHandler contractsWithMatchHandler) {
+    boolean isMatching(ContractMethodMatch match, ClassItemMatcher classItemMatcher) {
         ContractoClassType returnType = ContractoClassType.fromMethod(match.method)
         Item responseBody = match.getContractResponseBody()
-        return contractsWithMatchHandler.checkClassMatchItem(returnType, responseBody)
+        return classItemMatcher.checkClassMatchItem(returnType, responseBody)
     }
 }

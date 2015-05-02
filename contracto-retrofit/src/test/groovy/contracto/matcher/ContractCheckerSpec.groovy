@@ -1,7 +1,7 @@
 package contracto.matcher
 
 import client.data.MyData
-import contracto.handler.RetrofitContractsWithMatchHandler
+import contracto.handler.RetrofitClassItemMatcher
 import contracto.model.contract.Item
 import contracto.model.contract.JsonType
 import contracto.model.reflect.ContractoClassType
@@ -46,6 +46,6 @@ class ContractCheckerSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item){
-        return new RetrofitContractsWithMatchHandler().checkClassMatchItem(classType, item)
+        return new RetrofitClassItemMatcher().checkClassMatchItem(classType, item)
     }
 }

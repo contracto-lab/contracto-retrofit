@@ -1,6 +1,6 @@
 package contracto.matcher
 
-import contracto.handler.RetrofitContractsWithMatchHandler
+import contracto.handler.RetrofitClassItemMatcher
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import spock.lang.Specification
@@ -52,6 +52,6 @@ class ContractCheckerSimpleClassesSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item){
-        return new RetrofitContractsWithMatchHandler().checkClassMatchItem(classType, item)
+        return new RetrofitClassItemMatcher().checkClassMatchItem(classType, item)
     }
 }

@@ -10,9 +10,9 @@ import groovy.transform.CompileStatic
 class RequestBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
 
     @Override
-    boolean isMatching(ContractMethodMatch it, DefaultContractsWithMatchHandler contractsWithMatchHandler) {
+    boolean isMatching(ContractMethodMatch it, ClassItemMatcher classItemMatcher) {
         Item requestBody = it.getContractRequestBody()
-        int withBodyIndex = it.method.parameterAnnotations.findIndexOf(contractsWithMatchHandler.&withBody)
+        int withBodyIndex = it.method.parameterAnnotations.findIndexOf(classItemMatcher.&withBody)
         if (requestBody == null && withBodyIndex == -1) {
             return true
         }
@@ -20,6 +20,6 @@ class RequestBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
             return false
         }
         ContractoClassType type = ContractoClassType.fromParameter(it.method, withBodyIndex)
-        return contractsWithMatchHandler.checkClassMatchItem(type, requestBody)
+        return classItemMatcher.checkClassMatchItem(type, requestBody)
     }
 }
