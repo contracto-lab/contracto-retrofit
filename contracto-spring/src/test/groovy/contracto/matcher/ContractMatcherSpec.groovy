@@ -126,11 +126,9 @@ class ContractMatcherSpec extends Specification {
         result
     }
 
-    public static List<ContractoMethod> findMethods(List<Class> apis) {
+    public static List<Method> findMethods(List<Class> apis) {
         apis.collectMany {
-            it.declaredMethods.findAll { !it.isSynthetic() } collect {
-                new ContractoMethod(it)
-            }
+            it.declaredMethods.findAll { !it.isSynthetic() }
         }
     }
 

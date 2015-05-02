@@ -10,6 +10,8 @@ import contracto.model.contract.Contract
 import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
+import java.lang.reflect.Method
+
 class ContractMatcherSpec extends Specification {
 
     ContractMatcherFinder matcher = new ContractMatcherFinder(new RetrofitContractMatcher())
@@ -88,11 +90,9 @@ class ContractMatcherSpec extends Specification {
         result
     }
 
-    public static List<ContractoMethod> findMethods(List<Class> apis) {
-        apis.collectMany {
-            it.declaredMethods.collect {
-                new ContractoMethod(it)
-            }
+    public static List<Method> findMethods(List<Class> apis) {
+        return apis.collectMany {
+            it.declaredMethods as List
         }
     }
 }

@@ -17,8 +17,7 @@ class ContractMatcherFinder {
         this.contractMatcher = contractMatcher
     }
 
-    MatchResult calculateMatchResult(List<ContractoMethod> contractoMethods, List<Contract> contracts) {
-        List<Method> methods = contractoMethods.collect { it.method }
+    MatchResult calculateMatchResult(List<Method> methods, List<Contract> contracts) {
         return new MatchResult(
                 matches: findMatching(methods, contracts),
                 unmatchedContracts: findContractsWithoutMatch(methods, contracts),
