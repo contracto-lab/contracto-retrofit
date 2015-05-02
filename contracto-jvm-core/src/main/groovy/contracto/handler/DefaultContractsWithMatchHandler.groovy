@@ -16,9 +16,16 @@ abstract class DefaultContractsWithMatchHandler {
     }
 
     private boolean isMatching(ContractMethodMatch match) {
-        return matchers.collectMany {
+        List<MatchError> errors = matchers.collectMany {
             it.isMatching(match, classItemMatcher)
-        }.empty
+        }
+        if (errors) {
+            System.err.println("Error: Wrong matching for: \n$match")
+            errors.each {
+                System.err.println("Cause: $it")
+            }
+        }
+        return errors.empty
     }
 
     static interface Matcher {

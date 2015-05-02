@@ -41,8 +41,12 @@ class ContractoClassType {
         }
     }
 
+    @Override
+    String toString() {
+        return type.toString()
+    }
+
     interface ToClass{
         Class toClass(ContractoClassType contractoClassType)
     }
-
 }
