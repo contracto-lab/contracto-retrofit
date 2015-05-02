@@ -6,6 +6,8 @@ import contracto.model.contract.Contract
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
+import java.lang.reflect.Method
+
 @CompileStatic
 class ContractMatcherFinder {
 
@@ -18,7 +20,7 @@ class ContractMatcherFinder {
     List<ContractMethodMatch> findMatching(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.collectMany { method ->
             contracts.findAll { contract ->
-                contractMatcher.isMatching(contract, method)
+                contractMatcher.isMatching(contract, method.method)
             }.collect { contract ->
                 new ContractMethodMatch(method: method, contract: contract)
             }
@@ -28,7 +30,7 @@ class ContractMatcherFinder {
     List<Contract> findContractsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return contracts.findAll { contract ->
             !methods.any { method ->
-                contractMatcher.isMatching(contract, method)
+                contractMatcher.isMatching(contract, method.method)
             }
         }
     }
@@ -36,7 +38,7 @@ class ContractMatcherFinder {
     List<ContractoMethod> findMethodsWithoutMatch(List<ContractoMethod> methods, List<Contract> contracts) {
         return methods.findAll { method ->
             !contracts.any { contract ->
-                contractMatcher.isMatching(contract, method)
+                contractMatcher.isMatching(contract, method.method)
             }
         }
     }
@@ -50,6 +52,6 @@ class ContractMatcherFinder {
     }
 
     interface ContractMatcher{
-        boolean isMatching(Contract contract, ContractoMethod method)
+        boolean isMatching(Contract contract, Method method)
     }
 }
