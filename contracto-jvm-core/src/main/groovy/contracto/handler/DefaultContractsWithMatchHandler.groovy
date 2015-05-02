@@ -22,21 +22,21 @@ abstract class DefaultContractsWithMatchHandler {
     }
 
     protected boolean checkResponseBody(ContractMethodMatch match) {
-        ContractoClassType returnType = match.method.returnType
+        ContractoClassType returnType = ContractoClassType.fromMethod(match.regularMethod)
         Item responseBody = match.getContractResponseBody()
         return checkClassMatchItem(returnType, responseBody)
     }
 
     protected boolean checkRequestBody(ContractMethodMatch it) {
         Item requestBody = it.getContractRequestBody()
-        int withBodyIndex = it.method.method.parameterAnnotations.findIndexOf(this.&withBody)
+        int withBodyIndex = it.regularMethod.parameterAnnotations.findIndexOf(this.&withBody)
         if (requestBody == null && withBodyIndex == -1) {
             return true
         }
         if (requestBody == null || withBodyIndex == -1) {
             return false
         }
-        ContractoClassType type = ContractoClassType.fromParameter(it.method.method, withBodyIndex)
+        ContractoClassType type = ContractoClassType.fromParameter(it.regularMethod, withBodyIndex)
         return checkClassMatchItem(type, requestBody)
     }
 

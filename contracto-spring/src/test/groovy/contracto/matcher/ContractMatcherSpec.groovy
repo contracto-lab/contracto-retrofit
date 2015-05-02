@@ -28,8 +28,8 @@ class ContractMatcherSpec extends Specification {
         then:
         matches.size() == 2
         matches.containsAll([
-                new ContractMethodMatch(method: new ContractoMethod(first(MyDataController.methods)), contract: ContractStub.contract()),
-                new ContractMethodMatch(method: new ContractoMethod(first(OtherController.methods)), contract: ContractStub.otherContract())
+                new ContractMethodMatch(method: first(MyDataController.methods), contract: ContractStub.contract()),
+                new ContractMethodMatch(method: first(OtherController.methods), contract: ContractStub.otherContract())
         ])
     }
 
@@ -40,7 +40,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
-        matches == [new ContractMethodMatch(method: new ContractoMethod(first(MyDataController.methods)), contract: ContractStub.contract())]
+        matches == [new ContractMethodMatch(method: first(MyDataController.methods), contract: ContractStub.contract())]
     }
 
     def "Should find one match besed on methods"() {
@@ -50,7 +50,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
-        matches == [new ContractMethodMatch(method: new ContractoMethod(first(MyDataController.methods)), contract: ContractStub.contract())]
+        matches == [new ContractMethodMatch(method: first(MyDataController.methods), contract: ContractStub.contract())]
     }
 
     def "Should not find unmatched contracts"() {
@@ -79,7 +79,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractoMethod> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
         then:
-        unmatched == [new ContractoMethod(MyDataController.getDeclaredMethod("myData"))]
+        unmatched*.method == [MyDataController.getDeclaredMethod("myData")]
     }
 
     def "Should find matches using path combination"() {
@@ -91,7 +91,7 @@ class ContractMatcherSpec extends Specification {
         then:
         matches.size() == 1
         matches.containsAll([
-                new ContractMethodMatch(method: new ContractoMethod(first(CombinedController.methods)), contract: ContractStub.contract())
+                new ContractMethodMatch(method: first(CombinedController.methods), contract: ContractStub.contract())
         ])
     }
 

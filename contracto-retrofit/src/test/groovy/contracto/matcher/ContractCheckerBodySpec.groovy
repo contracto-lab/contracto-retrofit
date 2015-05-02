@@ -5,9 +5,10 @@ import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.*
-import contracto.model.reflect.ContractoMethod
 import retrofit.http.Body
 import spock.lang.Specification
+
+import java.lang.reflect.Method
 
 class ContractCheckerBodySpec extends Specification {
 
@@ -51,9 +52,9 @@ class ContractCheckerBodySpec extends Specification {
         )
     }
 
-    private ContractoMethod aMethod(String name) {
-        return new ContractoMethod(ContractCheckerBodySpec.methods.find {
+    private Method aMethod(String name) {
+        return ContractCheckerBodySpec.methods.find {
             it.name == name
-        })
+        }
     }
 }

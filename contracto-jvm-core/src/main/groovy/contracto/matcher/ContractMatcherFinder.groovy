@@ -30,7 +30,7 @@ class ContractMatcherFinder {
             contracts.findAll { contract ->
                 contractMatcher.isMatching(contract, method)
             }.collect { contract ->
-                new ContractMethodMatch(method: new ContractoMethod(method), contract: contract)
+                new ContractMethodMatch(method: method, contract: contract)
             }
         }
     }

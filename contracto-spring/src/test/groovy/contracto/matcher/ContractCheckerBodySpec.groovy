@@ -9,6 +9,8 @@ import contracto.model.reflect.ContractoMethod
 import org.springframework.web.bind.annotation.RequestBody
 import spock.lang.Specification
 
+import java.lang.reflect.Method
+
 class ContractCheckerBodySpec extends Specification {
 
     void justMethod(@RequestBody MyData myData) {
@@ -47,9 +49,9 @@ class ContractCheckerBodySpec extends Specification {
         )
     }
 
-    private ContractoMethod aMethod(String name) {
-        return new ContractoMethod(ContractCheckerBodySpec.methods.find {
+    private Method aMethod(String name) {
+        return ContractCheckerBodySpec.methods.find {
             it.name == name
-        })
+        }
     }
 }

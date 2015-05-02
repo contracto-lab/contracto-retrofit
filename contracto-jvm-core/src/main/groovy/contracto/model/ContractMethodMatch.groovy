@@ -12,8 +12,12 @@ import java.lang.reflect.Method
 @CompileStatic
 class ContractMethodMatch {
 
-    ContractoMethod method
+    Method method
     Contract contract
+
+    Method getRegularMethod() {
+        return method
+    }
 
     Item getContractResponseBody() {
         contract.responseBody

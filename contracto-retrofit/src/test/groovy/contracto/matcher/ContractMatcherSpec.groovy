@@ -25,8 +25,8 @@ class ContractMatcherSpec extends Specification {
         then:
         matches.size() == 2
         matches.containsAll([
-                new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract()),
-                new ContractMethodMatch(method: new ContractoMethod(OtherApi.methods.first()), contract: ContractStub.otherContract()),
+                new ContractMethodMatch(method: MyApi.methods.first(), contract: ContractStub.contract()),
+                new ContractMethodMatch(method: OtherApi.methods.first(), contract: ContractStub.otherContract()),
         ])
     }
 
@@ -37,7 +37,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
-        matches == [new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract())]
+        matches == [new ContractMethodMatch(method: MyApi.methods.first(), contract: ContractStub.contract())]
     }
 
     def "Should find one match besed on methods"() {
@@ -47,7 +47,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractMethodMatch> matches = matcher.calculateMatchResult(methods, contracts).matches
         then:
-        matches == [new ContractMethodMatch(method: new ContractoMethod(MyApi.methods.first()), contract: ContractStub.contract())]
+        matches == [new ContractMethodMatch(method: MyApi.methods.first(), contract: ContractStub.contract())]
     }
 
     def "Should not find unmatched contracts"() {
@@ -76,7 +76,7 @@ class ContractMatcherSpec extends Specification {
         when:
         List<ContractoMethod> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
         then:
-        unmatched == [new ContractoMethod(MyApi.getDeclaredMethod("getMyData"))]
+        unmatched*.method == [MyApi.getDeclaredMethod("getMyData")]
     }
 
     def "Should find match for both synchronized and observable call"() {
