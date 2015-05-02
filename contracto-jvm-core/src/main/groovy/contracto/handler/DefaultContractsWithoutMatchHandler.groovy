@@ -5,7 +5,7 @@ import groovy.transform.CompileStatic
 
 @CompileStatic
 class DefaultContractsWithoutMatchHandler {
-    boolean failOnContractsWithoutMatch = false;
+    boolean failOnContractsWithoutMatch = false
 
     boolean handle(List<Contract> contracts) {
         contracts.each{

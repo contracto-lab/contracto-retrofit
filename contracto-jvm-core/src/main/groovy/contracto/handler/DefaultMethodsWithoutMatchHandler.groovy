@@ -8,7 +8,10 @@ import java.lang.reflect.Method
 class DefaultMethodsWithoutMatchHandler {
     boolean failOnMethodsWithoutMatch = false
 
-    boolean handle(List<Method> contractoMethods) {
-        return contractoMethods.isEmpty() ? true : !failOnMethodsWithoutMatch
+    boolean handle(List<Method> methods) {
+        methods.each{
+            System.err.println("Warning no matching for: \n$it")
+        }
+        return methods.isEmpty() ? true : !failOnMethodsWithoutMatch
     }
 }

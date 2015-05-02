@@ -1,5 +1,7 @@
 package contracto.handler
 
+import contracto.handler.matcher.RequestBodyMatcher
+import contracto.handler.matcher.ResponseBodyMatcher
 import contracto.model.ContractMethodMatch
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
@@ -12,32 +14,23 @@ import java.lang.reflect.ParameterizedType
 @CompileStatic
 abstract class DefaultContractsWithMatchHandler {
 
+    Collection<Matcher> matchers = [new ResponseBodyMatcher(), new RequestBodyMatcher()]
     boolean failOnNotImplementedFields = true
 
     boolean handle(List<ContractMethodMatch> matches) {
-        return matches.every { match ->
-            return checkResponseBody(match) &&
-                    checkRequestBody(match)
+        return matches.every { it ->
+            return isMatching(it)
         }
     }
 
-    protected boolean checkResponseBody(ContractMethodMatch match) {
-        ContractoClassType returnType = ContractoClassType.fromMethod(match.method)
-        Item responseBody = match.getContractResponseBody()
-        return checkClassMatchItem(returnType, responseBody)
+    private boolean isMatching(ContractMethodMatch match) {
+        return matchers.every{
+            it.isMatching(match, this)
+        }
     }
 
-    protected boolean checkRequestBody(ContractMethodMatch it) {
-        Item requestBody = it.getContractRequestBody()
-        int withBodyIndex = it.method.parameterAnnotations.findIndexOf(this.&withBody)
-        if (requestBody == null && withBodyIndex == -1) {
-            return true
-        }
-        if (requestBody == null || withBodyIndex == -1) {
-            return false
-        }
-        ContractoClassType type = ContractoClassType.fromParameter(it.method, withBodyIndex)
-        return checkClassMatchItem(type, requestBody)
+    static interface Matcher {
+        boolean isMatching(ContractMethodMatch contractMethodMatch, DefaultContractsWithMatchHandler contractsWithMatchHandler)
     }
 
     abstract protected boolean withBody(Annotation[] annotations)

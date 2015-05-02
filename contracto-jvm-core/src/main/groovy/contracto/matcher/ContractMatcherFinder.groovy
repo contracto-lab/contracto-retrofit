@@ -17,10 +17,13 @@ class ContractMatcherFinder {
     }
 
     MatchResult calculateMatchResult(List<Method> methods, List<Contract> contracts) {
+        List<ContractMethodMatch> matching = findMatching(methods, contracts)
+        List<Contract> unmatchedContracts = contracts - matching*.contract
+        List<Method> unmatchedMethods = methods - matching*.method
         return new MatchResult(
-                matches: findMatching(methods, contracts),
-                unmatchedContracts: findContractsWithoutMatch(methods, contracts),
-                unmatchedMethods: findMethodsWithoutMatch(methods, contracts)
+                matches: matching,
+                unmatchedContracts: unmatchedContracts,
+                unmatchedMethods: unmatchedMethods,
         )
     }
 
@@ -30,22 +33,6 @@ class ContractMatcherFinder {
                 contractMatcher.isMatching(contract, method)
             }.collect { contract ->
                 new ContractMethodMatch(method: method, contract: contract)
-            }
-        }
-    }
-
-    private List<Contract> findContractsWithoutMatch(List<Method> methods, List<Contract> contracts) {
-        return contracts.findAll { contract ->
-            !methods.any { method ->
-                contractMatcher.isMatching(contract, method)
-            }
-        }
-    }
-
-    private List<Method> findMethodsWithoutMatch(List<Method> methods, List<Contract> contracts) {
-        return methods.findAll { method ->
-            !contracts.any { contract ->
-                contractMatcher.isMatching(contract, method)
             }
         }
     }
