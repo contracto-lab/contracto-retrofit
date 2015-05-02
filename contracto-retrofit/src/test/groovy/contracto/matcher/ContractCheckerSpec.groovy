@@ -46,6 +46,6 @@ class ContractCheckerSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item){
-        return new RetrofitClassItemMatcher().checkClassMatchItem(classType, item)
+        return new RetrofitClassItemMatcher().checkClassMatchItem(classType, item).empty
     }
 }

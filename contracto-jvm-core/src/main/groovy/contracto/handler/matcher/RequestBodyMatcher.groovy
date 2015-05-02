@@ -20,6 +20,6 @@ class RequestBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
             return false
         }
         ContractoClassType type = ContractoClassType.fromParameter(contractMethodMatch.method, withBodyIndex)
-        return classItemMatcher.checkClassMatchItem(type, requestBody)
+        return classItemMatcher.checkClassMatchItem(type, requestBody).empty
     }
 }

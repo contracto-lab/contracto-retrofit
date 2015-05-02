@@ -52,6 +52,6 @@ class ContractCheckerSimpleClassesSpec extends Specification {
     }
 
     private boolean checkClassMatchItem(ContractoClassType classType, Item item) {
-        return new SpringClassItemMatcher().checkClassMatchItem(classType, item)
+        return new SpringClassItemMatcher().checkClassMatchItem(classType, item).empty
     }
 }
