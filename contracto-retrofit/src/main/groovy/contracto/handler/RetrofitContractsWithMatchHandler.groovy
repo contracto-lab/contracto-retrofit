@@ -1,11 +1,14 @@
 package contracto.handler
 
+import contracto.matcher.ResponseBodyMatcher
+import contracto.matcher.classitem.RetrofitRequestBodyMatcher
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class RetrofitContractsWithMatchHandler extends DefaultContractsWithMatchHandler{
+class RetrofitContractsWithMatchHandler extends DefaultContractsWithMatchHandler {
 
     RetrofitContractsWithMatchHandler() {
-        super(new RetrofitClassItemMatcher())
+        classItemMatcher = new RetrofitClassItemMatcher()
+        matchers = [new ResponseBodyMatcher(), new RetrofitRequestBodyMatcher()] as Collection
     }
 }

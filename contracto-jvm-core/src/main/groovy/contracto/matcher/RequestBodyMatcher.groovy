@@ -7,13 +7,15 @@ import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 
+import java.lang.annotation.Annotation
+
 @CompileStatic
-class RequestBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
+abstract class RequestBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
 
     @Override
     boolean isMatching(ContractMethodMatch contractMethodMatch, ClassItemMatcher classItemMatcher) {
         Item requestBody = contractMethodMatch.getContractRequestBody()
-        int withBodyIndex = contractMethodMatch.method.parameterAnnotations.findIndexOf(classItemMatcher.&withBody)
+        int withBodyIndex = contractMethodMatch.method.parameterAnnotations.findIndexOf(this.&withBody)
         if (requestBody == null && withBodyIndex == -1) {
             return true
         }
@@ -23,4 +25,6 @@ class RequestBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
         ContractoClassType type = ContractoClassType.fromParameter(contractMethodMatch.method, withBodyIndex)
         return classItemMatcher.checkClassMatchItem(type, requestBody).empty
     }
+
+    abstract protected boolean withBody(Annotation[] annotations)
 }

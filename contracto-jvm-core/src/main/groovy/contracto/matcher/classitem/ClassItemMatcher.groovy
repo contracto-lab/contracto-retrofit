@@ -5,16 +5,12 @@ import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 
-import java.lang.annotation.Annotation
-
 @CompileStatic
 abstract class ClassItemMatcher {
 
     SimpleClassItemMatcher simpleClassItemMatcher = new SimpleClassItemMatcher()
     ObjectClassItemMatcher objectClassItemMatcher = new ObjectClassItemMatcher()
     ArrayClassItemMatcher arrayClassItemMatcher = new ArrayClassItemMatcher()
-
-    abstract protected boolean withBody(Annotation[] annotations)
 
     List<MatchError> checkClassMatchItem(ContractoClassType classType, Item item) {
         if (item.type.simple) {

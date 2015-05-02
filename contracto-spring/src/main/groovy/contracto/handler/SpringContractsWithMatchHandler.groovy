@@ -1,12 +1,15 @@
 package contracto.handler
 
+import contracto.matcher.ResponseBodyMatcher
+import contracto.matcher.classitem.SpringRequestBodyMatcher
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class SpringContractsWithMatchHandler extends DefaultContractsWithMatchHandler{
+class SpringContractsWithMatchHandler extends DefaultContractsWithMatchHandler {
 
     SpringContractsWithMatchHandler() {
-        super(new SpringClassItemMatcher())
+        classItemMatcher = new SpringClassItemMatcher()
+        matchers = [new ResponseBodyMatcher(), new SpringRequestBodyMatcher()] as Collection
     }
 
 }

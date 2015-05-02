@@ -1,20 +1,14 @@
 package contracto.handler
 
-import contracto.matcher.RequestBodyMatcher
-import contracto.matcher.ResponseBodyMatcher
 import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.ContractMethodMatch
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class DefaultContractsWithMatchHandler {
+abstract class DefaultContractsWithMatchHandler {
 
     ClassItemMatcher classItemMatcher
-    Collection<Matcher> matchers = [new ResponseBodyMatcher(), new RequestBodyMatcher()]
-
-    DefaultContractsWithMatchHandler(ClassItemMatcher classItemMatcher) {
-        this.classItemMatcher = classItemMatcher
-    }
+    Collection<Matcher> matchers
 
     boolean handle(List<ContractMethodMatch> matches) {
         return matches.every({ isMatching(it) })
