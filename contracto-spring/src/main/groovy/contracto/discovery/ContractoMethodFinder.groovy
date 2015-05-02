@@ -9,18 +9,22 @@ import java.lang.reflect.Method
 @CompileStatic
 class ContractoMethodFinder {
 
-    List<ContractoMethod> findMethods(List<Class> controllers) {
-
-        controllers.collectMany { Class controller ->
-            extractMethods(controller).collect {
-                new ContractoMethod(it)
-            }
-        }
+    List<ContractoMethod> findMethods(List<Class> classes) {
+        classes.collectMany(this.&allMethods)
+                .findAll(this.&annotated)
+                .collect(this.&wrap)
     }
 
-    private Collection<Method> extractMethods(Class controller) {
-            return controller.declaredMethods.findAll {
-                it.getAnnotation(RequestMapping) ? true : false
-            }
+    private List<Method> allMethods(Class aClass) {
+        return aClass.declaredMethods as List
+    }
+
+    private boolean annotated(Method method) {
+        return method.getAnnotation(RequestMapping)
+    }
+
+    private ContractoMethod wrap(Method method) {
+        return new ContractoMethod(method)
     }
 }
+
