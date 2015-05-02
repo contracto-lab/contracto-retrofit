@@ -1,4 +1,4 @@
-package contracto.matcher
+package contracto.handler
 
 import contracto.model.ContractMethodMatch
 import contracto.model.MatchResult

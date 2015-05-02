@@ -1,4 +1,4 @@
-package contracto.handler.matcher
+package contracto.matcher.classitem
 
 import contracto.model.MatchError
 import contracto.model.contract.Item

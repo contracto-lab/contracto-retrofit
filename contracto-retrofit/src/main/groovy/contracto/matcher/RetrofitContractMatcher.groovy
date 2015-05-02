@@ -1,5 +1,6 @@
 package contracto.matcher
 
+import contracto.handler.ContractMatcherFinder
 import contracto.model.HttpMethod
 import contracto.model.RetrofitPath
 import contracto.model.contract.Contract

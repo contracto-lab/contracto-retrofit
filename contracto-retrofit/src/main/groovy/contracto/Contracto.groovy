@@ -3,9 +3,9 @@ package contracto
 import contracto.api.ContractoService
 import contracto.discovery.ContractoMethodFinder
 import contracto.discovery.RetrofitAnnotatedMethodsFinder
+import contracto.handler.ContractMatcherFinder
 import contracto.handler.MatchResultHandler
 import contracto.handler.RetrofitContractsWithMatchHandler
-import contracto.matcher.ContractMatcherFinder
 import contracto.matcher.RetrofitContractMatcher
 import contracto.model.MatchResult
 import contracto.model.contract.Contract

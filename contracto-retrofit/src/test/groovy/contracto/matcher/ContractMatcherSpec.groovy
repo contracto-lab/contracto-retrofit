@@ -3,6 +3,7 @@ package contracto.matcher
 import client.api.MyApi
 import client.api.MyObservableApi
 import client.api.OtherApi
+import contracto.handler.ContractMatcherFinder
 import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub

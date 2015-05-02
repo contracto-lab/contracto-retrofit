@@ -1,8 +1,8 @@
 package contracto.handler
 
-import contracto.handler.matcher.ClassItemMatcher
-import contracto.handler.matcher.RequestBodyMatcher
-import contracto.handler.matcher.ResponseBodyMatcher
+import contracto.matcher.RequestBodyMatcher
+import contracto.matcher.ResponseBodyMatcher
+import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.ContractMethodMatch
 import groovy.transform.CompileStatic
 

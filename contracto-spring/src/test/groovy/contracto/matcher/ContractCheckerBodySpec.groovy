@@ -2,7 +2,6 @@ package contracto.matcher
 
 import client.model.MyData
 import contracto.handler.SpringClassItemMatcher
-import contracto.handler.matcher.RequestBodyMatcher
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.Contract

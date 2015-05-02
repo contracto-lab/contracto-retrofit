@@ -1,5 +1,6 @@
 package contracto.matcher
 
+import contracto.handler.ContractMatcherFinder
 import contracto.model.SpringRestMethod
 import contracto.model.SpringRestPath
 import contracto.model.contract.Contract

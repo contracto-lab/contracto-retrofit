@@ -1,6 +1,7 @@
 package contracto.matcher
 
 import client.controller.*
+import contracto.handler.ContractMatcherFinder
 import contracto.handler.SpringContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub

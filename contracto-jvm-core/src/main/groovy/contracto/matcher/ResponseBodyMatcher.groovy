@@ -1,6 +1,7 @@
-package contracto.handler.matcher
+package contracto.matcher
 
 import contracto.handler.DefaultContractsWithMatchHandler
+import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.ContractMethodMatch
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType

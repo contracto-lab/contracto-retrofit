@@ -1,6 +1,6 @@
 package contracto.handler
 
-import contracto.handler.matcher.ClassItemMatcher
+import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 import org.springframework.web.bind.annotation.RequestBody
