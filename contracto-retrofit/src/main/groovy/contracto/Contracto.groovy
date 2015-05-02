@@ -2,19 +2,23 @@ package contracto
 
 import contracto.api.ContractoService
 import contracto.discovery.ContractoMethodFinder
+import contracto.discovery.RetrofitAnnotatedMethodsFinder
 import contracto.handler.MatchResultHandler
 import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.matcher.ContractMatcherFinder
 import contracto.matcher.RetrofitContractMatcher
+import contracto.model.HttpMethod
 import contracto.model.MatchResult
 import contracto.model.contract.Contract
 import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
+import java.lang.reflect.Method
+
 @CompileStatic
 class Contracto {
     private ContractoService service = new ContractoService()
-    private ContractoMethodFinder methodExtractor = new ContractoMethodFinder()
+    private ContractoMethodFinder methodExtractor = new ContractoMethodFinder(new RetrofitAnnotatedMethodsFinder())
     private ContractMatcherFinder matcher = new ContractMatcherFinder(new RetrofitContractMatcher())
     private MatchResultHandler matchesHandler = new MatchResultHandler(new RetrofitContractsWithMatchHandler())
 

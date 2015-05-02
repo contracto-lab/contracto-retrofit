@@ -2,6 +2,7 @@ package contracto
 
 import contracto.api.ContractoService
 import contracto.discovery.ContractoMethodFinder
+import contracto.discovery.SpringAnnotatedMethodsFinder
 import contracto.handler.MatchResultHandler
 import contracto.handler.SpringContractsWithMatchHandler
 import contracto.matcher.ContractMatcherFinder
@@ -14,7 +15,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class Contracto {
     private ContractoService service = new ContractoService()
-    private ContractoMethodFinder methodExtractor = new ContractoMethodFinder()
+    private ContractoMethodFinder methodExtractor = new ContractoMethodFinder(new SpringAnnotatedMethodsFinder())
     private ContractMatcherFinder matcher = new ContractMatcherFinder(new SpringContractMatcher())
     private MatchResultHandler matchesHandler = new MatchResultHandler(new SpringContractsWithMatchHandler())
 

@@ -3,6 +3,7 @@ package contracto.dicovery
 import client.api.BadApi
 import client.data.MyData
 import contracto.discovery.ContractoMethodFinder
+import contracto.discovery.RetrofitAnnotatedMethodsFinder
 import spock.lang.Specification
 
 class ContractoMethodFinderSpec extends Specification {
@@ -11,7 +12,7 @@ class ContractoMethodFinderSpec extends Specification {
         given:
         def apis = [BadApi]
         when:
-        def methods = new ContractoMethodFinder().findMethods(apis)
+        def methods = new ContractoMethodFinder(new RetrofitAnnotatedMethodsFinder()).findMethods(apis)
         then:
         methods*.method == [BadApi.getDeclaredMethod("sendMyData", MyData)]
     }
