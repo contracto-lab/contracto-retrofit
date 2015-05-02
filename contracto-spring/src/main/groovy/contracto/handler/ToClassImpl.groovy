@@ -5,6 +5,7 @@ import groovy.transform.CompileStatic
 import org.springframework.http.ResponseEntity
 
 import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 @CompileStatic
 class ToClassImpl implements ContractoClassType.ToClass {
@@ -17,5 +18,16 @@ class ToClassImpl implements ContractoClassType.ToClass {
             }
         }
         return (Class) classType.type
+    }
+
+    @Override
+    Type toType(ContractoClassType classType) {
+        if (classType.type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) classType.type
+            if (parameterizedType.rawType == ResponseEntity) {
+                return parameterizedType.actualTypeArguments[0]
+            }
+        }
+        return classType.type
     }
 }

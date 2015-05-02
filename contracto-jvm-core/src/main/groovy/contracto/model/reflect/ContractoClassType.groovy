@@ -48,5 +48,7 @@ class ContractoClassType {
 
     interface ToClass{
         Class toClass(ContractoClassType contractoClassType)
+
+        Type toType(ContractoClassType contractoClassType)
     }
 }

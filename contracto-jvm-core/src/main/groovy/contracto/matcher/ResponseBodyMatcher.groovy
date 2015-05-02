@@ -13,7 +13,7 @@ class ResponseBodyMatcher implements DefaultContractsWithMatchHandler.Matcher {
 
     @Override
     Collection<MatchError> isMatching(ContractMethodMatch match, ClassItemMatcher classItemMatcher) {
-        ContractoClassType returnType = ContractoClassType.fromMethod(match.method)
+        ContractoClassType returnType = new ContractoClassType(type: classItemMatcher.classTypeResolver.toType(new ContractoClassType(type: match.method.genericReturnType)))
         Item responseBody = match.getContractResponseBody()
         return classItemMatcher.checkClassMatchItem(returnType, responseBody)
     }
