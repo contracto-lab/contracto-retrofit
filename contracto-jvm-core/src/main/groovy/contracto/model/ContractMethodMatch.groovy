@@ -21,4 +21,10 @@ class ContractMethodMatch {
     Item getContractRequestBody() {
         contract.requestBody
     }
+
+
+    @Override
+    public String toString() {
+        return "Method: $method, $contract";
+    }
 }

@@ -7,7 +7,7 @@ import contracto.Contracto
 import spock.lang.Specification
 
 class ExampleClientTest extends Specification {
-    def "TADAM"() {
+    def "Usage example"() {
         given:
         def apis = [MyApi, OtherApi, PostApi]
         def urls = [

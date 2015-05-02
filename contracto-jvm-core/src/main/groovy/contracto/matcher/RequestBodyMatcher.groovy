@@ -3,8 +3,8 @@ package contracto.matcher
 import contracto.handler.DefaultContractsWithMatchHandler
 import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.ContractMethodMatch
-import contracto.model.MatchError
 import contracto.model.contract.Item
+import contracto.model.error.MatchError
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 

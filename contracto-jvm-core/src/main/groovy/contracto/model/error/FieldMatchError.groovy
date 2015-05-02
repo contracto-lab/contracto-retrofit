@@ -1,4 +1,4 @@
-package contracto.model
+package contracto.model.error
 
 import contracto.model.contract.Item
 import contracto.model.reflect.ContractoClassType
@@ -7,17 +7,13 @@ import groovy.transform.TupleConstructor
 
 @CompileStatic
 @TupleConstructor
-class MatchError {
+final class FieldMatchError implements MatchError {
 
     ContractoClassType classType
     Item item
 
-
     @Override
     public String toString() {
-        return """MatchError: {
-    ${classType},
-    ${item}
-}"""
+        return "Simple type ${item} doesn't match given type ${classType}"
     }
 }

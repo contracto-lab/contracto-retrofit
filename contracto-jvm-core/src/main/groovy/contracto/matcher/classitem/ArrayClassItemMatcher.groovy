@@ -1,7 +1,8 @@
 package contracto.matcher.classitem
 
-import contracto.model.MatchError
 import contracto.model.contract.Item
+import contracto.model.error.ArrayMatchError
+import contracto.model.error.MatchError
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 
@@ -22,6 +23,6 @@ class ArrayClassItemMatcher {
             def cct = new ContractoClassType(type: genericArrayType.genericComponentType)
             return classItemMatcher.checkClassMatchItem(cct, item.embedded.first())
         }
-        return [new MatchError(contractoClassType, item)]
+        return [new ArrayMatchError(contractoClassType, item)]
     }
 }

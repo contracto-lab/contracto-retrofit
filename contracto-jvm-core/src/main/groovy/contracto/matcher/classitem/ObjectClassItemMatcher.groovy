@@ -1,7 +1,8 @@
 package contracto.matcher.classitem
 
-import contracto.model.MatchError
 import contracto.model.contract.Item
+import contracto.model.error.FieldMissingMatchError
+import contracto.model.error.MatchError
 import contracto.model.reflect.ContractoClassType
 import groovy.transform.CompileStatic
 
@@ -12,8 +13,10 @@ class ObjectClassItemMatcher {
 
     List<MatchError> checkObjectTypeMatch(ContractoClassType classType, Item item, ClassItemMatcher classItemMatcher) {
         if (failOnNotImplementedFields) {
-            if (!missingFields(classType, item, classItemMatcher).isEmpty())
-                return [new MatchError(classType, item)]
+            List<Item> fields = missingFields(classType, item, classItemMatcher)
+            if (!fields.isEmpty()) {
+                return fields.collect { new FieldMissingMatchError(classType, it) }
+            }
         }
         return existingFields(classType, item, classItemMatcher).collectMany {
             classItemMatcher.checkClassMatchItem(classType.findDeclaredField(it.name, classItemMatcher.classTypeResolver), it)

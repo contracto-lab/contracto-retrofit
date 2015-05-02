@@ -2,11 +2,11 @@ package contracto.model.contract
 
 import groovy.transform.Canonical
 import groovy.transform.CompileStatic
-
-import java.lang.reflect.Method
+import groovy.transform.ToString
 
 @Canonical
 @CompileStatic
+@ToString(ignoreNulls = true, includePackage = false, includeNames = true)
 class Contract {
 
     Schema schema

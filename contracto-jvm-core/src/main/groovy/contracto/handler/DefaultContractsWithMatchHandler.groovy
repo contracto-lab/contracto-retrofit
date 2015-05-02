@@ -2,7 +2,7 @@ package contracto.handler
 
 import contracto.matcher.classitem.ClassItemMatcher
 import contracto.model.ContractMethodMatch
-import contracto.model.MatchError
+import contracto.model.error.MatchError
 import groovy.transform.CompileStatic
 
 @CompileStatic
