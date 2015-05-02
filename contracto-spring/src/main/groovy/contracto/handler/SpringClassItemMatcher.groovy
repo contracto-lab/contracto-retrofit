@@ -15,7 +15,7 @@ class SpringClassItemMatcher extends ClassItemMatcher {
     }
 
     @Override
-    protected ContractoClassType.ToClass getClassTypeResolver() {
+    ContractoClassType.ToClass getClassTypeResolver() {
         return new ToClassImpl()
     }
 }
