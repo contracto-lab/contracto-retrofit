@@ -4,8 +4,10 @@ import client.model.MyData
 import contracto.handler.SpringContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
-import contracto.model.contract.*
-import contracto.model.reflect.ContractoMethod
+import contracto.model.contract.Contract
+import contracto.model.contract.Item
+import contracto.model.contract.Schema
+import contracto.model.contract.SchemaRequest
 import org.springframework.web.bind.annotation.RequestBody
 import spock.lang.Specification
 

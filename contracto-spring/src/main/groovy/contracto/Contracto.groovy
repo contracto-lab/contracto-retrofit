@@ -9,7 +9,6 @@ import contracto.matcher.ContractMatcherFinder
 import contracto.matcher.SpringContractMatcher
 import contracto.model.MatchResult
 import contracto.model.contract.Contract
-import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
 import java.lang.reflect.Method

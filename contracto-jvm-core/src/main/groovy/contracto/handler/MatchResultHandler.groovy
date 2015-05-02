@@ -16,7 +16,7 @@ class MatchResultHandler {
 
     boolean isSuccessfullyMatched(MatchResult matchResult) {
         return contractsWithoutMatchHandler.handle(matchResult.unmatchedContracts) &&
-                methodsWithoutMatchHandler.handle(matchResult.unmatchedMethods.collect { it.method }) &&
+                methodsWithoutMatchHandler.handle(matchResult.unmatchedMethods) &&
                 contractsWithMatchHandler.handle(matchResult.matches)
     }
 }

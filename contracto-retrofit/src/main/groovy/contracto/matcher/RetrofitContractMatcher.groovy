@@ -3,7 +3,6 @@ package contracto.matcher
 import contracto.model.HttpMethod
 import contracto.model.RetrofitPath
 import contracto.model.contract.Contract
-import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
 import java.lang.reflect.Method

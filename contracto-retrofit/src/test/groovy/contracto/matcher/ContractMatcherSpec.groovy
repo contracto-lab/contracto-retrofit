@@ -7,7 +7,6 @@ import contracto.handler.RetrofitContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.Contract
-import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
 import java.lang.reflect.Method
@@ -74,9 +73,9 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyApi])
         when:
-        List<ContractoMethod> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
+        List<Method> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
         then:
-        unmatched*.method == [MyApi.getDeclaredMethod("getMyData")]
+        unmatched == [MyApi.getDeclaredMethod("getMyData")]
     }
 
     def "Should find match for both synchronized and observable call"() {

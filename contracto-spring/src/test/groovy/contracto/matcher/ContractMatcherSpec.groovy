@@ -1,16 +1,10 @@
 package contracto.matcher
 
-import client.controller.CombinedController
-import client.controller.MyDataController
-import client.controller.OtherController
-import client.controller.ResponseEntityController
-import client.controller.SecWrongMethodController
-import client.controller.WrongMethodController
+import client.controller.*
 import contracto.handler.SpringContractsWithMatchHandler
 import contracto.model.ContractMethodMatch
 import contracto.model.ContractStub
 import contracto.model.contract.Contract
-import contracto.model.reflect.ContractoMethod
 import spock.lang.Specification
 
 import java.lang.reflect.Method
@@ -77,9 +71,9 @@ class ContractMatcherSpec extends Specification {
         given:
         def methods = findMethods([MyDataController])
         when:
-        List<ContractoMethod> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
+        List<Method> unmatched = matcher.calculateMatchResult(methods, []).unmatchedMethods
         then:
-        unmatched*.method == [MyDataController.getDeclaredMethod("myData")]
+        unmatched == [MyDataController.getDeclaredMethod("myData")]
     }
 
     def "Should find matches using path combination"() {

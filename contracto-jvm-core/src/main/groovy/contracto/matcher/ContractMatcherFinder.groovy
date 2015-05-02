@@ -3,7 +3,6 @@ package contracto.matcher
 import contracto.model.ContractMethodMatch
 import contracto.model.MatchResult
 import contracto.model.contract.Contract
-import contracto.model.reflect.ContractoMethod
 import groovy.transform.CompileStatic
 
 import java.lang.reflect.Method
@@ -43,13 +42,11 @@ class ContractMatcherFinder {
         }
     }
 
-    private List<ContractoMethod> findMethodsWithoutMatch(List<Method> methods, List<Contract> contracts) {
+    private List<Method> findMethodsWithoutMatch(List<Method> methods, List<Contract> contracts) {
         return methods.findAll { method ->
             !contracts.any { contract ->
                 contractMatcher.isMatching(contract, method)
             }
-        }.collect{
-            new ContractoMethod(it)
         }
     }
 
