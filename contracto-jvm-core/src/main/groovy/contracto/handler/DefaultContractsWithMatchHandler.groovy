@@ -17,13 +17,11 @@ class DefaultContractsWithMatchHandler {
     }
 
     boolean handle(List<ContractMethodMatch> matches) {
-        return matches.every { it ->
-            return isMatching(it)
-        }
+        return matches.every(this.&isMatching)
     }
 
     private boolean isMatching(ContractMethodMatch match) {
-        return matchers.every{
+        return matchers.every {
             it.isMatching(match, classItemMatcher)
         }
     }
