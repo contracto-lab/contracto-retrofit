@@ -17,7 +17,7 @@ class DefaultContractsWithMatchHandler {
     }
 
     boolean handle(List<ContractMethodMatch> matches) {
-        return matches.every(this.&isMatching)
+        return matches.every({ isMatching(it) })
     }
 
     private boolean isMatching(ContractMethodMatch match) {
