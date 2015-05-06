@@ -21,6 +21,7 @@ class ContractStub {
                                 body: body(),
                         ),
                 ),
+                examples: []
         )
     }
 
@@ -47,6 +48,7 @@ class ContractStub {
                                 body: otherBody(),
                         ),
                 ),
+                examples: []
         )
     }
 
