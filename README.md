@@ -1,6 +1,6 @@
 # contracto-retrofit
 
-![EL Passion](https://avatars.githubusercontent.com/u/98255?v=3&s=16) Sponsored by [EL Passion](http://www.elpassion.com/)
+[![EL Passion](https://img.shields.io/badge/Supported%20by-EL%20Passion-36b452.svg)](https://github.com/elpassion)
 
 [![Build Status](https://travis-ci.org/contracto-lab/contracto-retrofit.svg?branch=master)](https://travis-ci.org/contracto-lab/contracto-retrofit)
 
